@@ -272,7 +272,7 @@ def get_albums():
 
 @app.route('/api/songs/<int:songId>/play', methods=['POST'])
 @login_required
-def play_song(songId):
+def mark_song_played(songId):
     """Mark song as played and update play count"""
     # Update play count in database
     import sqlite3
