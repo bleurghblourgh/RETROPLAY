@@ -177,6 +177,10 @@ class ModernLoginScreen:
         
         if self.messageTimer > 0:
             self.messageTimer -= deltaTime
+        
+        # Update logo animation
+        if hasattr(self, 'logo'):
+            self.logo.update(deltaTime)
     
     def render(self):
         """Render modern login screen"""
@@ -201,10 +205,13 @@ class ModernLoginScreen:
         pygame.draw.rect(self.screen, colors['neonPink'], 
                         (panelX, panelY, panelWidth, panelHeight), 3, border_radius=20)
         
-        # Draw title
-        titleText = self.titleFont.render("RETROPLAY", True, colors['neonPink'])
-        titleRect = titleText.get_rect(center=(self.screenWidth // 2, panelY + 80))
-        self.screen.blit(titleText, titleRect)
+        # Draw logo
+        from src.ui.logo import AnimatedLogo
+        if not hasattr(self, 'logo'):
+            logoWidth = 500
+            self.logo = AnimatedLogo((self.screenWidth - logoWidth) // 2, panelY + 40, scale=0.6)
+        
+        self.logo.render(self.screen)
         
         # Draw subtitle
         subtitle = "Welcome Back" if self.mode == 'login' else "Create Account"

@@ -298,9 +298,17 @@ class ModernMainWindow:
                         (0, 0, self.screenWidth, 80))
         self.screen.blit(topBarSurface, (0, 0))
         
-        # Draw title
-        titleText = self.titleFont.render("RETROPLAY", True, colors['neonPink'])
-        self.screen.blit(titleText, (self.screenWidth // 2 - 180, 15))
+        # Draw logo in top bar
+        from src.ui.logo import CompactLogo
+        if not hasattr(self, 'compactLogo'):
+            self.compactLogo = CompactLogo(self.screenWidth // 2 - 200, 15, size=50)
+        
+        self.compactLogo.render(self.screen)
+        
+        # Draw "RETROPLAY" text next to logo
+        logoTextFont = pygame.font.Font(None, 48)
+        logoText = logoTextFont.render("RETROPLAY", True, colors['neonPink'])
+        self.screen.blit(logoText, (self.screenWidth // 2 - 140, 25))
         
         # Draw view switcher buttons
         self.libraryViewButton.render(self.screen)

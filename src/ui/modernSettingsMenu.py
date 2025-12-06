@@ -136,10 +136,15 @@ class ModernSettingsMenu:
         pygame.draw.rect(self.screen, colors['neonPink'], 
                         (panelX, panelY, panelWidth, panelHeight), 3, border_radius=20)
         
-        # Draw title
+        # Draw title with logo
+        from src.ui.logo import CompactLogo
+        if not hasattr(self, 'settingsLogo'):
+            self.settingsLogo = CompactLogo(panelX + 50, panelY + 40, size=40)
+        
+        self.settingsLogo.render(self.screen)
+        
         titleText = self.titleFont.render("SETTINGS", True, colors['neonPink'])
-        titleRect = titleText.get_rect(center=(self.screenWidth // 2, panelY + 60))
-        self.screen.blit(titleText, titleRect)
+        self.screen.blit(titleText, (panelX + 110, panelY + 45))
         
         # Draw close button
         self.closeButton.render(self.screen)
