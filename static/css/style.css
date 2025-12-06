@@ -365,6 +365,210 @@ body {
     display: block;
 }
 
+/* Songs Grid */
+.songs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.song-card {
+    background: var(--bg-mid);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.song-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+    box-shadow: 0 8px 24px rgba(236, 72, 153, 0.3);
+}
+
+.song-artwork {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--bg-dark);
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.vinyl-disc {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vinyl-disc::before {
+    content: '';
+    position: absolute;
+    inset: 10%;
+    border-radius: 50%;
+    background: repeating-radial-gradient(
+        circle at center,
+        transparent 0px,
+        transparent 2px,
+        rgba(255, 255, 255, 0.03) 2px,
+        rgba(255, 255, 255, 0.03) 4px
+    );
+}
+
+.vinyl-center {
+    width: 30%;
+    height: 30%;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+}
+
+.play-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.song-card:hover .play-overlay {
+    opacity: 1;
+}
+
+.play-icon {
+    width: 48px;
+    height: 48px;
+    color: var(--primary);
+    filter: drop-shadow(0 0 10px var(--primary));
+}
+
+.song-info {
+    text-align: center;
+}
+
+.song-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.song-artist {
+    color: var(--text-secondary);
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.song-album {
+    color: var(--text-secondary);
+    font-size: 11px;
+    margin-top: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Playlists Grid */
+.playlists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.playlist-card {
+    background: var(--bg-mid);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.playlist-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--secondary);
+    box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3);
+}
+
+.playlist-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--bg-dark);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.disc-stack {
+    position: relative;
+    width: 60px;
+    height: 60px;
+}
+
+.disc-stack .disc {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.disc-stack .disc:nth-child(1) {
+    top: 0;
+    left: 0;
+    transform: rotate(-5deg);
+}
+
+.disc-stack .disc:nth-child(2) {
+    top: 5px;
+    left: 5px;
+    transform: rotate(0deg);
+}
+
+.disc-stack .disc:nth-child(3) {
+    top: 10px;
+    left: 10px;
+    transform: rotate(5deg);
+}
+
+.playlist-info {
+    flex: 1;
+}
+
+.playlist-name {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 0.5rem;
+}
+
+.playlist-description {
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
 /* Empty State */
 .empty-state {
     text-align: center;

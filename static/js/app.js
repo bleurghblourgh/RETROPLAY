@@ -235,13 +235,53 @@ function displayPlaylists(playlists) {
     
     grid.innerHTML = playlists.map(playlist => `
         <div class="playlist-card" data-playlist-id="${playlist.playlistId}">
-            <div class="playlist-icon"></div>
+            <div class="playlist-icon">
+                <div class="disc-stack">
+                    <div class="disc"></div>
+                    <div class="disc"></div>
+                    <div class="disc"></div>
+                </div>
+            </div>
             <div class="playlist-info">
                 <div class="playlist-name">${playlist.playlistName}</div>
                 <div class="playlist-description">${playlist.description || ''}</div>
             </div>
         </div>
     `).join('');
+}
+
+// Create playlist
+document.getElementById('create-playlist-btn').addEventListener('click', showCreatePlaylistModal);
+
+function showCreatePlaylistModal() {
+    const name = prompt('Enter playlist name:');
+    if (!name) return;
+    
+    const description = prompt('Enter description (optional):');
+    
+    createPlaylist(name, description || '');
+}
+
+async function createPlaylist(name, description) {
+    try {
+        const response = await fetch('/api/playlists/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, description })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('Playlist created successfully!');
+            loadPlaylists();
+        } else {
+            alert('Failed to create playlist');
+        }
+    } catch (error) {
+        console.error('Error creating playlist:', error);
+        alert('Error creating playlist');
+    }
 }
 
 // Upload
