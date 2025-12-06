@@ -77,10 +77,15 @@ class Visualizer:
         
         # Draw particles
         for particle in self.particles:
-            particleColor = (*particle['color'], particle['alpha'])
-            pygame.draw.circle(surface, particleColor, 
-                             (int(particle['x']), int(particle['y'])), 
-                             particle['size'])
+            if particle['alpha'] > 0:
+                particleSurface = pygame.Surface((particle['size'] * 2, particle['size'] * 2), pygame.SRCALPHA)
+                particleColor = (*particle['color'], particle['alpha'])
+                pygame.draw.circle(particleSurface, particleColor, 
+                                 (particle['size'], particle['size']), 
+                                 particle['size'])
+                surface.blit(particleSurface, 
+                           (int(particle['x']) - particle['size'], 
+                            int(particle['y']) - particle['size']))
     
     def _spawnParticle(self, x, y):
         """Spawn a particle effect"""
