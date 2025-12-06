@@ -196,8 +196,14 @@ function displaySongs(songs) {
     }
     
     grid.innerHTML = songs.map(song => `
-        <div class="song-card" data-song-id="${song.songId}">
-            <div class="song-artwork"></div>
+        <div class="song-card" data-song-id="${song.songId}" onclick="playSong(${song.songId})">
+            <div class="song-artwork">
+                <div class="play-overlay">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </div>
+            </div>
             <div class="song-info">
                 <div class="song-title">${song.title}</div>
                 <div class="song-artist">${song.artist}</div>

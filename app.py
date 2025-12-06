@@ -191,6 +191,29 @@ def serve_music(filename):
     """Serve music files"""
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
+@app.route('/api/player/play', methods=['POST'])
+@login_required
+def play_song():
+    """Get song URL for playback"""
+    data = request.json
+    songId = data.get('songId')
+    
+    # Get song details from database
+    userId = session.get('userId')
+    songs = libraryManager.getUserSongs(userId)
+    
+    song = next((s for s in songs if s['songId'] == songId), None)
+    
+    if song:
+        filename = os.path.basename(song['filePath'])
+        return jsonify({
+            'success': True,
+            'url': f'/uploads/music/{filename}',
+            'song': song
+        })
+    
+    return jsonify({'success': False, 'message': 'Song not found'})
+
 @app.route('/api/playlists/<int:playlistId>/songs', methods=['GET'])
 @login_required
 def get_playlist_songs(playlistId):
