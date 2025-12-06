@@ -6,9 +6,13 @@ Main entry point for the application
 import pygame
 import sys
 from src.core.audioEngine import AudioEngine
-from src.ui.mainWindow import MainWindow
+from src.ui.modernMainWindow import ModernMainWindow
 from src.auth.authenticationManager import AuthenticationManager
 from src.utils.colorManager import ColorManager
+import os
+
+# Enable drag and drop
+os.environ['SDL_VIDEO_ALLOW_SCREENSAVER'] = '1'
 
 class RetroplayApp:
     def __init__(self):
@@ -30,7 +34,10 @@ class RetroplayApp:
         self.audioEngine = AudioEngine()
         
         # Initialize UI
-        self.mainWindow = MainWindow(self.screen, self.colorManager, self.audioEngine, self.authManager)
+        self.mainWindow = ModernMainWindow(self.screen, self.colorManager, self.audioEngine, self.authManager)
+        
+        # Enable file drop events
+        pygame.event.set_allowed([pygame.DROPFILE])
         
     def run(self):
         """Main application loop"""
