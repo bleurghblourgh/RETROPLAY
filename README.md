@@ -1,6 +1,6 @@
 # RETROPLAY
 
-A modern retro-themed music player with synthwave aesthetics, AI-powered features, and intuitive mouse controls. Built with Python and Pygame.
+A modern web-based music player with sleek UI, AI-powered features, and real-time capabilities. Built with Flask, Socket.IO, and modern web technologies.
 
 ## ✨ Features
 

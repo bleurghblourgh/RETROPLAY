@@ -1,71 +1,36 @@
 """
-RETROPLAY - Retro-themed Music Player
-Main entry point for the application
+RETROPLAY Web Application Launcher
+Run this file to start the RETROPLAY web server
 """
 
-import pygame
 import sys
-from src.core.audioEngine import AudioEngine
-from src.ui.modernMainWindow import ModernMainWindow
-from src.auth.authenticationManager import AuthenticationManager
-from src.utils.colorManager import ColorManager
 import os
 
-# Enable drag and drop
-os.environ['SDL_VIDEO_ALLOW_SCREENSAVER'] = '1'
+# Add current directory to path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-class RetroplayApp:
-    def __init__(self):
-        pygame.init()
-        pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=512)
-        
-        self.screenWidth = 1280
-        self.screenHeight = 720
-        self.screen = pygame.display.set_mode((self.screenWidth, self.screenHeight))
-        pygame.display.set_caption("RETROPLAY")
-        
-        self.clock = pygame.time.Clock()
-        self.running = True
-        self.fps = 60
-        
-        # Initialize managers
-        self.colorManager = ColorManager()
-        self.authManager = AuthenticationManager()
-        self.audioEngine = AudioEngine()
-        
-        # Initialize UI
-        self.mainWindow = ModernMainWindow(self.screen, self.colorManager, self.audioEngine, self.authManager)
-        
-        # Enable file drop events
-        pygame.event.set_allowed([pygame.DROPFILE])
-        
-    def run(self):
-        """Main application loop"""
-        while self.running:
-            deltaTime = self.clock.tick(self.fps) / 1000.0
-            
-            # Event handling
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
-                else:
-                    self.mainWindow.handleEvent(event)
-            
-            # Update
-            self.mainWindow.update(deltaTime)
-            
-            # Render
-            self.mainWindow.render()
-            pygame.display.flip()
-        
-        self.cleanup()
+# Import and run the Flask app
+from app import app, socketio, print_welcome_screen
+import webbrowser
+import threading
+import time
+
+def open_browser():
+    """Open browser after short delay"""
+    time.sleep(1.5)
+    webbrowser.open('http://localhost:5000')
+
+if __name__ == '__main__':
+    # Print welcome screen
+    print_welcome_screen()
     
-    def cleanup(self):
-        """Clean up resources"""
-        self.audioEngine.cleanup()
-        pygame.quit()
-        sys.exit()
-
-if __name__ == "__main__":
-    app = RetroplayApp()
-    app.run()
+    # Open browser in background thread
+    threading.Thread(target=open_browser, daemon=True).start()
+    
+    # Run server
+    try:
+        socketio.run(app, host='0.0.0.0', port=5000, debug=False, allow_unsafe_werkzeug=True)
+    except KeyboardInterrupt:
+        print("\n\n👋 Shutting down RETROPLAY server...")
+        print("✅ Server stopped successfully\n")
+        sys.exit(0)
