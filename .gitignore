@@ -27,6 +27,11 @@ wheels/
 *.db
 *.sqlite
 *.sqlite3
+database/retroplay.db
+
+# Uploads
+uploads/
+static/uploads/
 
 # IDE
 .vscode/
@@ -40,8 +45,6 @@ wheels/
 Thumbs.db
 
 # User data
-database/retroplay.db
-assets/user_uploads/
 config/user_settings.json
 
 # API Keys
@@ -51,3 +54,11 @@ config/api_keys.json
 # Logs
 *.log
 logs/
+
+# Flask
+instance/
+.webassets-cache
+
+# Node (if using npm for frontend tools)
+node_modules/
+package-lock.json
