@@ -29,7 +29,19 @@ if __name__ == '__main__':
     
     # Run server
     try:
-        socketio.run(app, host='0.0.0.0', port=5000, debug=False, allow_unsafe_werkzeug=True)
+        socketio.run(app, host='127.0.0.1', port=5000, debug=False, allow_unsafe_werkzeug=True)
+    except OSError as e:
+        if "10048" in str(e) or "address already in use" in str(e).lower():
+            print("\n❌ ERROR: Port 5000 is already in use!")
+            print("\n💡 Solutions:")
+            print("   1. Close any other RETROPLAY instances")
+            print("   2. Kill the process using port 5000:")
+            print("      Windows: netstat -ano | findstr :5000")
+            print("               taskkill /PID <PID> /F")
+            print("   3. Or change the port in main.py\n")
+        else:
+            print(f"\n❌ ERROR: {e}\n")
+        sys.exit(1)
     except KeyboardInterrupt:
         print("\n\n👋 Shutting down RETROPLAY server...")
         print("✅ Server stopped successfully\n")
