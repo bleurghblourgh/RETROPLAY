@@ -1,0 +1,9 @@
+{
+  "defaultTheme": "synthwave",
+  "defaultVolume": 0.7,
+  "audioQuality": "high",
+  "visualizerEnabled": true,
+  "particleEffects": true,
+  "diskAnimationSpeed": 1.0,
+  "autoSaveSession": true
+}
