@@ -4,12 +4,13 @@ A modern web-based music player with sleek UI, AI-powered features, and real-tim
 
 ## ✨ Features
 
-### 🎨 Modern UI Design
-- **Clean Interface**: Professional, mouse-driven design
-- **Drag & Drop**: Drop music files directly into the app
-- **Hover Effects**: Interactive buttons with neon glow effects
-- **Smooth Animations**: Polished transitions and visual feedback
-- **Image Support**: Display album artwork and custom images
+### 🌐 Modern Web Interface
+- **Sleek Design**: State-of-the-art UI inspired by Spotify and Apple Music
+- **Responsive Layout**: Works on desktop, tablet, and mobile
+- **Tab Navigation**: Library, Playlists, Albums, Upload, Settings
+- **Drag & Drop**: Drop music files directly in Upload tab
+- **Real-time Updates**: Socket.IO for instant synchronization
+- **Smooth Animations**: CSS transitions and modern effects
 
 ### 🎵 Music Management
 - **Smart Library**: Organize your music collection

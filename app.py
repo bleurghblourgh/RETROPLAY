@@ -191,6 +191,110 @@ def serve_music(filename):
     """Serve music files"""
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
+@app.route('/api/playlists/<int:playlistId>/songs', methods=['GET'])
+@login_required
+def get_playlist_songs(playlistId):
+    """Get songs in a playlist"""
+    songs = playlistManager.getPlaylistSongs(playlistId)
+    return jsonify({'success': True, 'songs': songs})
+
+@app.route('/api/playlists/<int:playlistId>/add', methods=['POST'])
+@login_required
+def add_to_playlist(playlistId):
+    """Add song to playlist"""
+    data = request.json
+    songId = data.get('songId')
+    
+    success = playlistManager.addSongToPlaylist(playlistId, songId)
+    return jsonify({'success': success})
+
+@app.route('/api/playlists/<int:playlistId>/remove', methods=['POST'])
+@login_required
+def remove_from_playlist(playlistId):
+    """Remove song from playlist"""
+    data = request.json
+    songId = data.get('songId')
+    
+    success = playlistManager.removeSongFromPlaylist(playlistId, songId)
+    return jsonify({'success': success})
+
+@app.route('/api/playlists/<int:playlistId>/delete', methods=['DELETE'])
+@login_required
+def delete_playlist(playlistId):
+    """Delete playlist"""
+    success = playlistManager.deletePlaylist(playlistId)
+    return jsonify({'success': success})
+
+@app.route('/api/library/albums', methods=['GET'])
+@login_required
+def get_albums():
+    """Get user's albums"""
+    userId = session.get('userId')
+    songs = libraryManager.getUserSongs(userId)
+    
+    # Group by album
+    albums = {}
+    for song in songs:
+        albumName = song.get('album', 'Unknown Album')
+        if albumName not in albums:
+            albums[albumName] = {
+                'name': albumName,
+                'artist': song.get('artist', 'Unknown'),
+                'songs': [],
+                'albumArt': song.get('albumArt')
+            }
+        albums[albumName]['songs'].append(song)
+    
+    return jsonify({'success': True, 'albums': list(albums.values())})
+
+@app.route('/api/songs/<int:songId>/play', methods=['POST'])
+@login_required
+def play_song(songId):
+    """Mark song as played and update play count"""
+    # Update play count in database
+    import sqlite3
+    conn = sqlite3.connect('database/retroplay.db')
+    cursor = conn.cursor()
+    cursor.execute('UPDATE songs SET playCount = playCount + 1, lastPlayed = ? WHERE songId = ?',
+                  (datetime.now(), songId))
+    conn.commit()
+    conn.close()
+    
+    return jsonify({'success': True})
+
+@app.route('/api/ai/analyze/<int:songId>', methods=['POST'])
+@login_required
+def analyze_song(songId):
+    """Analyze song with AI"""
+    # Get song from database
+    import sqlite3
+    conn = sqlite3.connect('database/retroplay.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT filePath FROM songs WHERE songId = ?', (songId,))
+    result = cursor.fetchone()
+    conn.close()
+    
+    if result:
+        filePath = result[0]
+        bpm = aiAnalyzer.detectBpm(filePath)
+        mood = aiAnalyzer.analyzeMood(filePath)
+        genre = aiAnalyzer.extractGenre(filePath)
+        
+        # Update database
+        conn = sqlite3.connect('database/retroplay.db')
+        cursor = conn.cursor()
+        cursor.execute('UPDATE songs SET bpm = ?, mood = ?, genre = ? WHERE songId = ?',
+                      (bpm, mood, genre, songId))
+        conn.commit()
+        conn.close()
+        
+        return jsonify({
+            'success': True,
+            'analysis': {'bpm': bpm, 'mood': mood, 'genre': genre}
+        })
+    
+    return jsonify({'success': False, 'message': 'Song not found'})
+
 # WebSocket events
 @socketio.on('connect')
 def handle_connect():

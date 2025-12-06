@@ -311,26 +311,111 @@ async function handleFiles(files) {
     }
 }
 
+// Player State
+let audioPlayer = null;
+let currentQueue = [];
+let currentQueueIndex = 0;
+let isPlaying = false;
+let isShuffled = false;
+let repeatMode = 'off'; // 'off', 'one', 'all'
+
+function initializeAudioPlayer() {
+    audioPlayer = new Audio();
+    
+    audioPlayer.addEventListener('ended', () => {
+        if (repeatMode === 'one') {
+            audioPlayer.currentTime = 0;
+            audioPlayer.play();
+        } else {
+            playNext();
+        }
+    });
+    
+    audioPlayer.addEventListener('timeupdate', updateProgressBar);
+    audioPlayer.addEventListener('loadedmetadata', updateDuration);
+}
+
 // Player
 function setupPlayerListeners() {
+    initializeAudioPlayer();
+    
     document.getElementById('play-btn').addEventListener('click', togglePlay);
     document.getElementById('prev-btn').addEventListener('click', playPrevious);
     document.getElementById('next-btn').addEventListener('click', playNext);
     document.getElementById('shuffle-btn').addEventListener('click', toggleShuffle);
     document.getElementById('repeat-btn').addEventListener('click', toggleRepeat);
+    
+    // Volume control
+    const volumeSlider = document.querySelector('.player-volume .volume-slider');
+    volumeSlider.addEventListener('input', (e) => {
+        if (audioPlayer) {
+            audioPlayer.volume = e.target.value / 100;
+        }
+    });
+}
+
+function playSong(song, queue = null) {
+    if (!audioPlayer) return;
+    
+    // Set queue if provided
+    if (queue) {
+        currentQueue = queue;
+        currentQueueIndex = queue.findIndex(s => s.songId === song.songId);
+    }
+    
+    // Load and play
+    audioPlayer.src = `/uploads/music/${song.filePath.split('/').pop()}`;
+    audioPlayer.play();
+    isPlaying = true;
+    
+    // Update UI
+    updatePlayerUI(song);
+    updatePlayButton();
+    
+    // Track play count
+    fetch(`/api/songs/${song.songId}/play`, { method: 'POST' });
 }
 
 function togglePlay() {
-    // Implement play/pause logic
-    console.log('Toggle play');
+    if (!audioPlayer || !audioPlayer.src) return;
+    
+    if (isPlaying) {
+        audioPlayer.pause();
+        isPlaying = false;
+    } else {
+        audioPlayer.play();
+        isPlaying = true;
+    }
+    
+    updatePlayButton();
 }
 
 function playPrevious() {
-    console.log('Previous track');
+    if (currentQueue.length === 0) return;
+    
+    currentQueueIndex--;
+    if (currentQueueIndex < 0) {
+        currentQueueIndex = currentQueue.length - 1;
+    }
+    
+    playSong(currentQueue[currentQueueIndex]);
 }
 
 function playNext() {
-    console.log('Next track');
+    if (currentQueue.length === 0) return;
+    
+    currentQueueIndex++;
+    if (currentQueueIndex >= currentQueue.length) {
+        if (repeatMode === 'all') {
+            currentQueueIndex = 0;
+        } else {
+            isPlaying = false;
+            updatePlayButton();
+            return;
+        }
+    }
+    
+    playSong(currentQueue[currentQueueIndex]);
 }
 
 function toggleShuffle() {
