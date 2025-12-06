@@ -1,17 +1,43 @@
 # RETROPLAY
 
-A retro-themed music player with synthwave aesthetics, featuring animated vinyl disk visualization, customizable themes, and comprehensive music management.
+A modern retro-themed music player with synthwave aesthetics, AI-powered features, and intuitive mouse controls. Built with Python and Pygame.
 
-## Features
+## ✨ Features
 
-- **Retro UI Design**: Synthwave-inspired interface with neon colors and animated elements
-- **Animated Vinyl Disk**: Rotating disk visualization that syncs with music playback
-- **Multiple Themes**: Choose from 5 retro color schemes (Synthwave, Tokyo Nights, Cyberpunk Red, Vaporwave Pastels, Matrix Green)
-- **User Authentication**: Secure login system with bcrypt password hashing
-- **Music Library**: Upload and organize your music collection
-- **Playlist Management**: Create and manage custom playlists
-- **Audio Controls**: Play, pause, skip, shuffle, and repeat functionality
-- **SQLite Database**: Local storage for user data, songs, and playlists
+### 🎨 Modern UI Design
+- **Clean Interface**: Professional, mouse-driven design
+- **Drag & Drop**: Drop music files directly into the app
+- **Hover Effects**: Interactive buttons with neon glow effects
+- **Smooth Animations**: Polished transitions and visual feedback
+- **Image Support**: Display album artwork and custom images
+
+### 🎵 Music Management
+- **Smart Library**: Organize your music collection
+- **Playlist Creation**: Build and manage custom playlists
+- **Album View**: Browse music by album with artwork
+- **Drag & Drop Upload**: Simply drop files to add music
+- **Metadata Extraction**: Automatic song info detection
+
+### 🤖 AI-Powered Features
+- **BPM Detection**: Automatic beat detection
+- **Mood Analysis**: AI classifies song mood (energetic, calm, happy, melancholic)
+- **Genre Classification**: Smart genre prediction
+- **Smart Recommendations**: Suggests similar songs
+- **AI Descriptions**: GPT-powered playlist descriptions
+- **Listening Analytics**: Track your music preferences
+
+### 🎨 Visual Features
+- **Animated Vinyl Disk**: Rotating disk synced with playback
+- **Audio Visualizer**: Real-time frequency bars with particle effects
+- **5 Retro Themes**: Synthwave, Tokyo Nights, Cyberpunk Red, Vaporwave Pastels, Matrix Green
+- **Dynamic Colors**: Mood-based color palettes
+- **Neon Aesthetics**: Authentic retro-futuristic design
+
+### 🔐 User System
+- **Secure Authentication**: bcrypt password hashing
+- **User Profiles**: Personal libraries and preferences
+- **Theme Persistence**: Saves your color scheme choice
+- **Session Management**: Secure login sessions
 
 ## Installation
 
