@@ -65,6 +65,8 @@ def get_db():
 def init_db():
     conn = get_db()
     cursor = conn.cursor()
+    
+    # Create tables
     cursor.executescript('''
         CREATE TABLE IF NOT EXISTS users (
             userId INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -90,6 +92,7 @@ def init_db():
             customImage TEXT,
             customArtist TEXT,
             playCount INTEGER DEFAULT 0,
+            liked INTEGER DEFAULT 0,
             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (userId) REFERENCES users(userId)
         );
@@ -114,6 +117,18 @@ def init_db():
         );
     ''')
     conn.commit()
+    
+    # Migration: Add 'liked' column if it doesn't exist (for existing databases)
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT liked FROM songs LIMIT 1")
+    except sqlite3.OperationalError:
+        print("[DB] Adding 'liked' column to songs table...")
+        cursor = conn.cursor()
+        cursor.execute("ALTER TABLE songs ADD COLUMN liked INTEGER DEFAULT 0")
+        conn.commit()
+        print("[DB] Migration complete")
+    
     conn.close()
 
 def login_required(f):
@@ -799,6 +814,119 @@ def clear_ai_chat():
     user_id = session['userId']
     if user_id in ai_conversations:
         ai_conversations[user_id] = []
+    return jsonify({'success': True})
+
+
+# ============================================
+# QUICK WIN FEATURES API ENDPOINTS
+# ============================================
+
+@app.route('/api/library/recent', methods=['GET'])
+@login_required
+def get_recently_played():
+    """Get recently played songs (last 20)"""
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT * FROM songs 
+        WHERE userId = ? AND playCount > 0
+        ORDER BY playCount DESC, createdAt DESC
+        LIMIT 20
+    ''', (session['userId'],))
+    songs = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return jsonify({'success': True, 'songs': songs})
+
+
+@app.route('/api/library/liked', methods=['GET'])
+@login_required
+def get_liked_songs():
+    """Get all liked songs"""
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT * FROM songs 
+        WHERE userId = ? AND liked = 1
+        ORDER BY createdAt DESC
+    ''', (session['userId'],))
+    songs = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return jsonify({'success': True, 'songs': songs})
+
+
+@app.route('/api/songs/<int:song_id>/like', methods=['POST'])
+@login_required
+def toggle_like_song(song_id):
+    """Toggle like status for a song"""
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    # Get current like status
+    cursor.execute('SELECT liked FROM songs WHERE songId = ? AND userId = ?', 
+                   (song_id, session['userId']))
+    result = cursor.fetchone()
+    
+    if not result:
+        conn.close()
+        return jsonify({'success': False, 'message': 'Song not found'})
+    
+    # Toggle the like status
+    new_liked = 0 if result['liked'] else 1
+    cursor.execute('UPDATE songs SET liked = ? WHERE songId = ?', (new_liked, song_id))
+    conn.commit()
+    conn.close()
+    
+    return jsonify({'success': True, 'liked': bool(new_liked)})
+
+
+@app.route('/api/songs/<int:song_id>/artist', methods=['PUT'])
+@login_required
+def update_song_artist(song_id):
+    """Update song artist name"""
+    data = request.json
+    artist = data.get('artist', '').strip()
+    
+    if not artist:
+        return jsonify({'success': False, 'message': 'Artist name required'})
+    
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute('UPDATE songs SET customArtist = ? WHERE songId = ? AND userId = ?',
+                   (artist, song_id, session['userId']))
+    conn.commit()
+    conn.close()
+    
+    return jsonify({'success': True})
+
+
+@app.route('/api/songs/<int:song_id>', methods=['DELETE'])
+@login_required
+def delete_song(song_id):
+    """Delete a song"""
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    # Get file path first
+    cursor.execute('SELECT filePath FROM songs WHERE songId = ? AND userId = ?',
+                   (song_id, session['userId']))
+    result = cursor.fetchone()
+    
+    if result:
+        # Delete from playlists
+        cursor.execute('DELETE FROM playlistSongs WHERE songId = ?', (song_id,))
+        # Delete song record
+        cursor.execute('DELETE FROM songs WHERE songId = ?', (song_id,))
+        conn.commit()
+        
+        # Try to delete file
+        try:
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], result['filePath'])
+            if os.path.exists(filepath):
+                os.remove(filepath)
+        except:
+            pass
+    
+    conn.close()
     return jsonify({'success': True})
 
 
