@@ -156,27 +156,11 @@
                         <span>Playlists</span>
                     </button>
                     
-                    <button class="nav-item" data-tab="albums">
-                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
-                            <circle cx="12" cy="12" r="3" stroke-width="2"/>
-                        </svg>
-                        <span>Albums</span>
-                    </button>
-                    
                     <button class="nav-item" data-tab="upload">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                         <span>Upload</span>
-                    </button>
-                    
-                    <button class="nav-item" data-tab="ai-chat">
-                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-width="2"/>
-                            <path d="M9 10h.01M15 10h.01M9.5 14a3.5 3.5 0 0 0 5 0" stroke-width="2"/>
-                        </svg>
-                        <span>AI Assistant</span>
                     </button>
                     
                     <button class="nav-item" data-tab="podcasts">
@@ -279,25 +263,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Albums Tab -->
-                <div class="tab-content" id="albums-tab">
-                    <div class="content-header">
-                        <h1>Albums</h1>
-                    </div>
-                    
-                    <div class="albums-grid" id="albums-grid">
-                        <div class="empty-state">
-                            <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <circle cx="12" cy="12" r="10" stroke-width="2"/>
-                                <circle cx="12" cy="12" r="3" stroke-width="2"/>
-                            </svg>
-                            <h3>No albums yet</h3>
-                            <p>Your albums will appear here</p>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Upload Tab -->
                 <div class="tab-content" id="upload-tab">
                     <div class="content-header">
@@ -457,104 +422,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- AI Chat Tab -->
-                <div class="tab-content" id="ai-chat-tab">
-                    <div class="content-header">
-                        <h1>🤖 AI Music Assistant</h1>
-                        <p class="subtitle">Chat with AI to discover music, get recommendations, and analyze your library</p>
-                    </div>
-                    
-                    <div class="ai-chat-container">
-                        <div class="ai-chat-sidebar">
-                            <h3>Quick Actions</h3>
-                            <button class="ai-action-btn" onclick="aiQuickAction('recommend')">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path d="M12 2L2 7l10 5 10-5-10-5z" stroke-width="2"/>
-                                </svg>
-                                Get Recommendations
-                            </button>
-                            <button class="ai-action-btn" onclick="aiQuickAction('analyze')">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <circle cx="12" cy="12" r="10" stroke-width="2"/>
-                                </svg>
-                                Analyze Library
-                            </button>
-                            <button class="ai-action-btn" onclick="aiQuickAction('playlist')">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path d="M15 6v12a3 3 0 1 0 3-3H15z" stroke-width="2"/>
-                                </svg>
-                                Create Playlist
-                            </button>
-                            <button class="ai-action-btn" onclick="aiQuickAction('mood')">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <circle cx="12" cy="12" r="10" stroke-width="2"/>
-                                    <path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01" stroke-width="2"/>
-                                </svg>
-                                Mood Analysis
-                            </button>
-                            <button class="ai-action-btn" onclick="clearAIChat()" style="margin-top: 1rem; background: var(--bg-light);">
-                                🗑️ Clear Chat
-                            </button>
-                            
-                            <div class="ai-stats">
-                                <h4>Your Music Stats</h4>
-                                <div class="ai-stat-item">
-                                    <span>Total Songs:</span>
-                                    <strong id="ai-total-songs">0</strong>
-                                </div>
-                                <div class="ai-stat-item">
-                                    <span>Playlists:</span>
-                                    <strong id="ai-total-playlists">0</strong>
-                                </div>
-                                <div class="ai-stat-item">
-                                    <span>Top Genre:</span>
-                                    <strong id="ai-top-genre">-</strong>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="ai-chat-main">
-                            <div class="ai-chat-messages" id="ai-chat-messages">
-                                <div class="ai-message ai-message-assistant">
-                                    <div class="ai-message-avatar">🤖</div>
-                                    <div class="ai-message-content">
-                                        <p>Hey there! 🎵 I'm your RETROPLAY AI assistant. I can help you:</p>
-                                        <ul>
-                                            <li>Discover new music based on your taste</li>
-                                            <li>Analyze songs and describe their mood</li>
-                                            <li>Create personalized playlists</li>
-                                            <li>Get recommendations from your library</li>
-                                        </ul>
-                                        <p>What would you like to do today?</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="ai-chat-input-container">
-                                <input 
-                                    type="text" 
-                                    id="ai-chat-input" 
-                                    placeholder="Ask me anything about your music..." 
-                                    onkeypress="if(event.key==='Enter') sendAIMessage()"
-                                >
-                                <button class="btn-primary" onclick="sendAIMessage()">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                        <line x1="22" y1="2" x2="11" y2="13" stroke-width="2"/>
-                                        <polygon points="22 2 15 22 11 13 2 9 22 2" stroke-width="2"/>
-                                    </svg>
-                                    Send
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="ai-recommendations" id="ai-recommendations" style="display: none;">
-                            <h3>🎵 Recommended for You</h3>
-                            <div id="ai-recommended-songs" class="recommended-songs-list"></div>
-                        </div>
-                    </div>
-                </div>
-                
                 <!-- Podcasts Tab -->
                 <div class="tab-content" id="podcasts-tab">
                     <div class="content-header">
@@ -1584,7 +1451,6 @@
     <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
     <script src="{{ url_for('static', filename='js/vinyl-visualizer.js') }}"></script>
     <script src="{{ url_for('static', filename='js/context-menu.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/ai-chat.js') }}"></script>
     <script src="{{ url_for('static', filename='js/features.js') }}"></script>
     <script src="{{ url_for('static', filename='js/audio-features.js') }}"></script>
     <script src="{{ url_for('static', filename='js/advanced-features.js') }}"></script>
