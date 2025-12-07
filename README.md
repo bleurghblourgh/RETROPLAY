@@ -41,7 +41,7 @@ pip install -r requirements.txt
 
 ### 3️⃣ Run the App
 ```bash
-python app.py
+python app_fixed.py
 ```
 
 ### 4️⃣ Open in Browser
