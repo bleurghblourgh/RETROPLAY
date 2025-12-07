@@ -200,7 +200,7 @@ def logout():
 def get_songs():
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM songs WHERE userId = ? ORDER BY addedAt DESC', (session['userId'],))
+    cursor.execute('SELECT * FROM songs WHERE userId = ? ORDER BY createdAt DESC', (session['userId'],))
     songs = [dict(row) for row in cursor.fetchall()]
     conn.close()
     print(f"[DEBUG] User {session['userId']} has {len(songs)} songs")
@@ -802,9 +802,12 @@ def clear_ai_chat():
     return jsonify({'success': True})
 
 
+# Initialize database on module load (important for fresh clones!)
+init_db()
+print("[DB] Database initialized")
+
 # Initialize and run
 if __name__ == '__main__':
-    init_db()
     print("\n" + "="*50)
     print("  RETROPLAY Server Starting...")
     print("  Open: http://localhost:5000")
