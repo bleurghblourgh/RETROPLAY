@@ -41,7 +41,7 @@ pip install -r requirements.txt
 
 ### 3️⃣ Run the App
 ```bash
-python app.py
+python app_fixed.py
 ```
 
 ### 4️⃣ Open in Browser
@@ -150,7 +150,7 @@ cd RETROPLAY
 pip install -r requirements.txt
 
 # Start the server
-python app.py
+python app_fixed.py
 ```
 
 ### Method 2: Download ZIP
@@ -161,7 +161,7 @@ python app.py
 5. Run:
 ```bash
 pip install -r requirements.txt
-python app.py
+python app_fixed.py
 ```
 
 ### Method 3: Windows Quick Start
@@ -253,7 +253,7 @@ pip install -r requirements.txt
 ```bash
 # Delete and recreate database
 rm database/retroplay.db
-python app.py  # Will create fresh database
+python app_fixed.py  # Will create fresh database
 ```
 
 ---
