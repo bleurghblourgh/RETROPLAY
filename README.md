@@ -9,103 +9,94 @@
   <img src="https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white"/>
   <img src="https://img.shields.io/badge/Flask-3.0+-000000?style=flat-square&logo=flask&logoColor=white"/>
   <img src="https://img.shields.io/badge/License-MIT-green?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Status-Production%20Ready-success?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Version-2.0-EC4899?style=flat-square"/>
 </p>
 
 <p align="center">
-  A beautiful, feature-rich music player featuring a spinning vinyl visualizer, 8 retro themes, infinite shuffle, and AI-powered music analysis.
+  A beautiful, feature-rich music player featuring spinning vinyl visualizer, 8+ themes, Picture-in-Picture mode, equalizer, podcasts, and much more!
 </p>
-
----
-
-## 📸 Screenshots
-
-| Library View | Vinyl Player | Fullscreen Mode |
-|:---:|:---:|:---:|
-| Browse your music | Spinning vinyl with album art | Immersive visualizer |
 
 ---
 
 ## ⚡ Quick Start
 
-### 1️⃣ Clone the Repository
 ```bash
+# Clone and run in 3 commands
 git clone https://github.com/bleurghblourgh/RETROPLAY.git
 cd RETROPLAY
+pip install -r requirements.txt && python app_fixed.py
 ```
 
-### 2️⃣ Install Dependencies
-```bash
-pip install -r requirements.txt
-```
+Then open **http://localhost:5000** in your browser.
 
-### 3️⃣ Run the App
-```bash
-python app_fixed.py
-```
+---
 
-### 4️⃣ Open in Browser
-Navigate to **http://localhost:5000** (opens automatically)
+## ✨ What's New in v2.0
+
+| Feature | Description |
+|---------|-------------|
+| 🖼️ **Picture-in-Picture** | Floating player that stays on top of other browser tabs! |
+| 🎨 **Custom Theme Creator** | Design your own color themes and share with friends |
+| 🎛️ **10-Band Equalizer** | Fine-tune your audio with presets |
+| 🎙️ **Podcast Support** | Separate podcast section with speed control & position saving |
+| 📻 **Radio Mode** | Auto-queue similar songs based on artist/genre |
+| 🎬 **6 Visualizer Modes** | Circular, Bars, Particles, Wave, Spectrum, Kaleidoscope |
+| ⏰ **Sleep Timer** | Auto-stop playback after set time |
+| 📊 **Stats Dashboard** | Track your listening habits |
+| 🔀 **Crossfade** | Smooth transitions between songs |
+| 📝 **Lyrics Display** | Auto-fetch lyrics for current song |
 
 ---
 
 ## 🎯 Features Overview
 
-### 🎨 Stunning Visual Design
-
-| Feature | Description |
-|---------|-------------|
-| **Retro Aesthetic** | Synthwave-inspired UI with neon colors and glow effects |
-| **8 Themes** | Synthwave, Neon, Vaporwave, Arcade, Cyberpunk, Miami, Terminal, Sunset |
-| **Animations** | Smooth transitions, hover effects, and loading animations |
-| **Responsive** | Works on desktop, tablet, and mobile |
-
 ### 🎵 Music Player
+- **Spinning Vinyl** with album art center
+- **Fullscreen Visualizer** with 6 stunning modes
+- **Picture-in-Picture** - control music while browsing other tabs
+- **Mini Player** - collapsible floating player
+- **Infinite Shuffle** - never run out of music
+- **Crossfade** - smooth song transitions
+- **Queue Management** - drag to reorder, right-click menu
 
-| Feature | Description |
-|---------|-------------|
-| **Spinning Vinyl** | Real vinyl disc animation with your album art in the center |
-| **Visualizer Bars** | Audio-reactive bars that bounce to your music |
-| **Fullscreen Mode** | Immersive fullscreen visualizer experience |
-| **Infinite Shuffle** | Never run out of music - auto-reshuffles when queue ends |
-| **Queue Display** | Always shows next 4 songs (wraps around playlist) |
+### 🎛️ Audio Features
+- **10-Band Equalizer** with presets (Rock, Pop, Jazz, Classical, etc.)
+- **Playback Speed** control (0.5x - 2x)
+- **Volume Control** with keyboard shortcuts
 
-### 📚 Library Management
+### 🎙️ Podcast Support
+- Separate podcast upload section
+- **Playback Speed** control (0.5x - 2x)
+- **Skip 15s/30s** buttons
+- **Position Saving** - resume where you left off
 
-| Feature | Description |
-|---------|-------------|
-| **Drag & Drop Upload** | Simply drag music files to upload |
-| **Supported Formats** | MP3, WAV, OGG, FLAC, M4A |
-| **Circular Album Art** | Beautiful circular artwork display |
-| **Custom Metadata** | Edit artist names and cover images |
-| **Search** | Find songs quickly |
+### 📻 Radio Mode
+- Right-click any song → "Start Radio"
+- Auto-queues similar songs by artist/album/genre
 
-### 📁 Playlists
+### 🎨 Themes & Customization
+- **8 Built-in Themes**: Synthwave, Neon, Vaporwave, Arcade, Cyberpunk, Miami, Terminal, Sunset
+- **Custom Theme Creator** - pick your own colors
+- **Share Themes** - export/import theme codes
 
-| Feature | Description |
-|---------|-------------|
-| **Create Playlists** | Organize your music your way |
-| **Custom Covers** | Upload custom playlist artwork |
-| **Right-Click Menu** | Quick actions via context menu |
-| **Play/Shuffle** | One-click playback options |
+### 📊 Stats & Social
+- **Stats Dashboard** - listening time, top artists, genres
+- **Social Sharing** - share songs to Twitter, Facebook, WhatsApp
+- **Profile System** - avatar, bio, favorite genres
 
-### 👤 User Profiles
-
-| Feature | Description |
-|---------|-------------|
-| **Profile Pictures** | Upload your avatar |
-| **Bio & Genres** | Share your music taste |
-| **Statistics** | Track your listening habits |
-| **Public/Private** | Control your visibility |
-
-### 🤖 AI Features
-
-| Feature | Description |
-|---------|-------------|
-| **BPM Detection** | Automatic tempo analysis |
-| **Mood Analysis** | Detect song mood/energy |
-| **Genre Classification** | Auto-categorize music |
-| **Smart Recommendations** | AI-powered suggestions |
+### ⌨️ Keyboard Shortcuts
+| Key | Action |
+|-----|--------|
+| `Space` | Play/Pause |
+| `←` / `→` | Previous/Next track |
+| `↑` / `↓` | Volume up/down |
+| `M` | Mute/Unmute |
+| `S` | Toggle shuffle |
+| `R` | Toggle repeat |
+| `F` | Fullscreen visualizer |
+| `L` | Like/Unlike song |
+| `1-6` | Switch visualizer mode (in fullscreen) |
+| `Ctrl+Shift+P` | Picture-in-Picture |
 
 ---
 
@@ -120,7 +111,29 @@ Navigate to **http://localhost:5000** (opens automatically)
 🌴 Miami Vice    - 80s beach vibes
 💻 Terminal      - Classic green screen
 🌅 Sunset        - Warm orange glow
+🎨 Custom        - Create your own!
 ```
+
+---
+
+## 📦 Installation
+
+### Option 1: Git Clone (Recommended)
+```bash
+git clone https://github.com/bleurghblourgh/RETROPLAY.git
+cd RETROPLAY
+pip install -r requirements.txt
+python app_fixed.py
+```
+
+### Option 2: Download ZIP
+1. Click **Code** → **Download ZIP**
+2. Extract the ZIP file
+3. Open terminal in the folder
+4. Run: `pip install -r requirements.txt && python app_fixed.py`
+
+### Option 3: Windows Quick Start
+Double-click `START.bat`
 
 ---
 
@@ -128,133 +141,48 @@ Navigate to **http://localhost:5000** (opens automatically)
 
 | Requirement | Minimum |
 |-------------|---------|
-| **Python** | 3.8 or higher |
+| **Python** | 3.8+ |
+| **Browser** | Chrome 116+ (for PiP), Firefox, Edge, Safari |
 | **RAM** | 512 MB |
-| **Storage** | 100 MB + music files |
-| **Browser** | Chrome, Firefox, Edge, Safari (modern versions) |
 | **OS** | Windows, macOS, Linux |
-
----
-
-## 📦 Installation Methods
-
-### Method 1: Git Clone (Recommended)
-```bash
-# Clone the repository
-git clone https://github.com/bleurghblourgh/RETROPLAY.git
-
-# Navigate to folder
-cd RETROPLAY
-
-# Install Python dependencies
-pip install -r requirements.txt
-
-# Start the server
-python app_fixed.py
-```
-
-### Method 2: Download ZIP
-1. Click the green **Code** button above
-2. Select **Download ZIP**
-3. Extract the ZIP file
-4. Open terminal/command prompt in the extracted folder
-5. Run:
-```bash
-pip install -r requirements.txt
-python app_fixed.py
-```
-
-### Method 3: Windows Quick Start
-```batch
-# Double-click START.bat
-# Or run in Command Prompt:
-cd RETROPLAY
-START.bat
-```
 
 ---
 
 ## 🎮 How to Use
 
-### First Time Setup
-1. **Register** - Create your account on the login screen
-2. **Login** - Enter your credentials
-3. **Upload Music** - Go to Upload tab, drag & drop your files
-4. **Create Playlists** - Organize your music
-5. **Customize** - Pick a theme in Settings
+### Getting Started
+1. **Register/Login** on the login screen
+2. **Upload Music** - drag & drop files in Upload tab
+3. **Play** - click any song to start
+4. **Customize** - pick a theme in Settings
 
-### Playing Music
-- **Click any song** to start playing
-- **Vinyl panel** on the right shows current track
-- **Click fullscreen button** for immersive mode
-- **Shuffle/Repeat** buttons for playback modes
+### Picture-in-Picture Mode
+1. Click the PiP button in the vinyl panel (or press `Ctrl+Shift+P`)
+2. A floating player appears that stays on top of other tabs
+3. Control playback while browsing YouTube, working, etc.
 
-### Keyboard Shortcuts
-| Key | Action |
-|-----|--------|
-| `Space` | Play/Pause |
-| `←` | Previous track |
-| `→` | Next track |
-| `↑/↓` | Volume up/down |
+### Custom Themes
+1. Go to **Settings** → **Themes**
+2. Click **+ Create Theme**
+3. Pick your colors and save
+4. Share theme codes with friends!
 
-### Right-Click Menus
-- **On Songs**: Add to playlist, edit artist, change image, delete
-- **On Playlists**: Play, rename, delete
-
----
-
-## 🔧 Configuration
-
-### Change Port
-Edit `app.py` and modify:
-```python
-app.run(host='0.0.0.0', port=5000)  # Change 5000 to your preferred port
-```
-
-### Database Location
-SQLite database is stored at:
-```
-RETROPLAY/database/retroplay.db
-```
-
-### Upload Location
-Music files are stored at:
-```
-RETROPLAY/uploads/music/
-```
+### Podcasts
+1. Go to **Podcasts** tab
+2. Upload podcast files separately from music
+3. Use speed controls and skip buttons
+4. Position is saved automatically
 
 ---
 
 ## 🐛 Troubleshooting
 
-### "Port already in use"
-```bash
-# Windows
-netstat -ano | findstr :5000
-taskkill /PID <PID> /F
-
-# Mac/Linux
-lsof -i :5000
-kill -9 <PID>
-```
-
-### "Module not found"
-```bash
-pip install --upgrade pip
-pip install -r requirements.txt
-```
-
-### "Audio not playing"
-- Check browser console (F12) for errors
-- Ensure audio files are valid MP3/WAV/OGG/FLAC/M4A
-- Try a different browser
-
-### "Database error"
-```bash
-# Delete and recreate database
-rm database/retroplay.db
-python app_fixed.py  # Will create fresh database
-```
+| Issue | Solution |
+|-------|----------|
+| Port in use | `netstat -ano \| findstr :5000` then kill the process |
+| Module not found | `pip install -r requirements.txt` |
+| PiP not working | Use Chrome 116+ or Edge 116+ |
+| Audio not playing | Check browser console (F12), try different browser |
 
 ---
 
@@ -262,79 +190,48 @@ python app_fixed.py  # Will create fresh database
 
 ```
 RETROPLAY/
-├── 📄 app.py                 # Main Flask application
-├── 📄 requirements.txt       # Python dependencies
-├── 📄 README.md              # This file
-│
-├── 📁 templates/
-│   └── index.html            # Main UI template
-│
-├── 📁 static/
-│   ├── 📁 css/               # Stylesheets
-│   │   ├── style.css         # Main styles
-│   │   ├── themes.css        # Theme definitions
-│   │   ├── vinyl-panel.css   # Vinyl player styles
-│   │   └── ...
-│   └── 📁 js/                # JavaScript
-│       ├── app.js            # Main application logic
-│       ├── vinyl-visualizer.js # Vinyl animation
-│       └── ...
-│
-├── 📁 database/
-│   └── retroplay.db          # SQLite database
-│
-├── 📁 uploads/
-│   ├── 📁 music/             # Uploaded songs
-│   └── 📁 images/            # Album art & avatars
-│
-└── 📁 config/
-    └── themes.json           # Theme configurations
+├── app_fixed.py          # Main Flask app (use this!)
+├── requirements.txt      # Python dependencies
+├── templates/
+│   └── index.html        # Main UI
+├── static/
+│   ├── css/              # Stylesheets
+│   └── js/               # JavaScript modules
+├── database/
+│   └── retroplay.db      # SQLite database
+└── uploads/
+    ├── music/            # Uploaded songs
+    └── images/           # Album art & avatars
 ```
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-|-------|------------|
-| **Backend** | Python, Flask, SQLite |
-| **Frontend** | HTML5, CSS3, JavaScript |
-| **Visualizer** | HTML5 Canvas |
-| **Audio** | Web Audio API, librosa |
-| **Auth** | Flask-Login, bcrypt |
+- **Backend**: Python, Flask, SQLite
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Audio**: Web Audio API
+- **Visualizer**: HTML5 Canvas
+- **PiP**: Document Picture-in-Picture API
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how:
-
-1. **Fork** the repository
-2. **Create** a feature branch: `git checkout -b feature/amazing-feature`
-3. **Commit** your changes: `git commit -m 'Add amazing feature'`
-4. **Push** to branch: `git push origin feature/amazing-feature`
-5. **Open** a Pull Request
+1. Fork the repository
+2. Create feature branch: `git checkout -b feature/amazing`
+3. Commit changes: `git commit -m 'Add amazing feature'`
+4. Push: `git push origin feature/amazing`
+5. Open a Pull Request
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- Inspired by classic vinyl players and synthwave aesthetics
-- Built with Flask and modern web technologies
-- Icons and design elements from various open-source projects
+MIT License - see [LICENSE](LICENSE) file.
 
 ---
 
 <p align="center">
   <b>Made with ❤️ and synthwave vibes</b>
-</p>
-
-<p align="center">
-  <a href="#-retroplay">⬆️ Back to Top</a>
 </p>

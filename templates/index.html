@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/vinyl-panel.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/layout-revert.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/features.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ui-overhaul.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -178,6 +179,14 @@
                         <span>AI Assistant</span>
                     </button>
                     
+                    <button class="nav-item" data-tab="podcasts">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" stroke-width="2"/>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8" stroke-width="2"/>
+                        </svg>
+                        <span>Podcasts</span>
+                    </button>
+                    
                     <button class="nav-item" data-tab="profile">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-width="2"/>
@@ -194,6 +203,21 @@
                         <span>Settings</span>
                     </button>
                 </nav>
+                
+                <!-- Sleep Timer Section -->
+                <div class="sidebar-sleep-timer" id="sidebar-sleep-timer">
+                    <div class="sleep-timer-header" onclick="showSleepTimerModal()">
+                        <svg class="sleep-timer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        <span>Sleep Timer</span>
+                    </div>
+                    <div class="sleep-timer-countdown" id="sleep-timer-countdown" style="display: none;">
+                        <span id="sidebar-sleep-time">--:--</span>
+                        <button class="sleep-cancel-btn" onclick="cancelSleepTimer()" title="Cancel Timer">✕</button>
+                    </div>
+                </div>
                 
                 <div class="sidebar-footer">
                     <div class="user-info" onclick="showProfileModal()" style="cursor: pointer;" title="View Profile">
@@ -531,6 +555,87 @@
                     </div>
                 </div>
                 
+                <!-- Podcasts Tab -->
+                <div class="tab-content" id="podcasts-tab">
+                    <div class="content-header">
+                        <h1>🎙️ Podcasts</h1>
+                        <p class="subtitle">Manage your podcast episodes</p>
+                    </div>
+                    
+                    <div class="podcasts-container">
+                        <!-- Upload Podcast Section -->
+                        <div class="podcast-upload-section">
+                            <div class="podcast-upload-zone" id="podcast-drop-zone">
+                                <div class="podcast-upload-icon">🎙️</div>
+                                <h3>Upload Podcasts</h3>
+                                <p>Drop podcast files here or click to browse</p>
+                                <p class="upload-hint">Podcasts are stored separately from your music library</p>
+                                <input type="file" id="podcast-file-input" accept="audio/*" multiple hidden>
+                            </div>
+                        </div>
+                        
+                        <!-- Playback Settings Card -->
+                        <div class="podcast-settings-card">
+                            <h3>⚙️ Playback Settings</h3>
+                            <div class="podcast-setting">
+                                <label>Playback Speed</label>
+                                <div class="speed-selector">
+                                    <button class="speed-option" data-speed="0.5">0.5x</button>
+                                    <button class="speed-option" data-speed="0.75">0.75x</button>
+                                    <button class="speed-option active" data-speed="1">1x</button>
+                                    <button class="speed-option" data-speed="1.25">1.25x</button>
+                                    <button class="speed-option" data-speed="1.5">1.5x</button>
+                                    <button class="speed-option" data-speed="1.75">1.75x</button>
+                                    <button class="speed-option" data-speed="2">2x</button>
+                                </div>
+                            </div>
+                            <div class="podcast-setting">
+                                <label>Skip Intervals</label>
+                                <div class="skip-settings">
+                                    <div class="skip-setting">
+                                        <span>Skip Back:</span>
+                                        <select id="skip-back-interval">
+                                            <option value="10">10 seconds</option>
+                                            <option value="15" selected>15 seconds</option>
+                                            <option value="30">30 seconds</option>
+                                        </select>
+                                    </div>
+                                    <div class="skip-setting">
+                                        <span>Skip Forward:</span>
+                                        <select id="skip-forward-interval">
+                                            <option value="15">15 seconds</option>
+                                            <option value="30" selected>30 seconds</option>
+                                            <option value="60">60 seconds</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Continue Listening -->
+                        <div class="podcast-section">
+                            <h3>▶️ Continue Listening</h3>
+                            <div id="continue-listening" class="podcast-episodes">
+                                <div class="empty-state">
+                                    <p>No episodes in progress</p>
+                                    <p class="subtitle">Your partially played episodes will appear here</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- All Podcasts -->
+                        <div class="podcast-section">
+                            <h3>📚 Your Podcasts</h3>
+                            <div id="podcast-episodes" class="podcast-episodes">
+                                <div class="empty-state">
+                                    <p>No podcasts yet</p>
+                                    <p class="subtitle">Upload podcasts above to see them here</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Settings Tab -->
                 <div class="tab-content" id="settings-tab">
                     <div class="content-header">
@@ -545,6 +650,13 @@
                                 <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24" stroke-width="2"/>
                             </svg>
                             Appearance
+                        </button>
+                        <button class="settings-tab-btn" data-settings-tab="shortcuts">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <rect x="2" y="4" width="20" height="16" rx="2" stroke-width="2"/>
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h8M6 16h.01M18 16h.01" stroke-width="2"/>
+                            </svg>
+                            Shortcuts
                         </button>
                         <button class="settings-tab-btn" data-settings-tab="audio">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -570,6 +682,100 @@
                     
                     <!-- Settings Content -->
                     <div class="settings-content">
+                        <!-- Keyboard Shortcuts Settings -->
+                        <div class="settings-panel" id="shortcuts-settings">
+                            <div class="shortcuts-section">
+                                <h3>⌨️ Keyboard Shortcuts</h3>
+                                <p class="shortcuts-subtitle">Control RETROPLAY with your keyboard</p>
+                                
+                                <div class="shortcuts-grid">
+                                    <div class="shortcut-category">
+                                        <h4>Playback</h4>
+                                        <div class="shortcut-item">
+                                            <kbd>Space</kbd>
+                                            <span>Play / Pause</span>
+                                        </div>
+                                        <div class="shortcut-item">
+                                            <kbd>←</kbd>
+                                            <span>Previous Song</span>
+                                        </div>
+                                        <div class="shortcut-item">
+                                            <kbd>→</kbd>
+                                            <span>Next Song</span>
+                                        </div>
+                                        <div class="shortcut-item">
+                                            <kbd>Shift</kbd> + <kbd>←</kbd>
+                                            <span>Seek Back 10s</span>
+                                        </div>
+                                        <div class="shortcut-item">
+                                            <kbd>Shift</kbd> + <kbd>→</kbd>
+                                            <span>Seek Forward 10s</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="shortcut-category">
+                                        <h4>Volume</h4>
+                                        <div class="shortcut-item">
+                                            <kbd>↑</kbd>
+                                            <span>Volume Up</span>
+                                        </div>
+                                        <div class="shortcut-item">
+                                            <kbd>↓</kbd>
+                                            <span>Volume Down</span>
+                                        </div>
+                                        <div class="shortcut-item">
+                                            <kbd>M</kbd>
+                                            <span>Mute / Unmute</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="shortcut-category">
+                                        <h4>Modes</h4>
+                                        <div class="shortcut-item">
+                                            <kbd>S</kbd>
+                                            <span>Toggle Shuffle</span>
+                                        </div>
+                                        <div class="shortcut-item">
+                                            <kbd>R</kbd>
+                                            <span>Toggle Repeat</span>
+                                        </div>
+                                        <div class="shortcut-item">
+                                            <kbd>F</kbd>
+                                            <span>Fullscreen Vinyl</span>
+                                        </div>
+                                        <div class="shortcut-item">
+                                            <kbd>L</kbd>
+                                            <span>Like Current Song</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="shortcut-category">
+                                        <h4>Navigation</h4>
+                                        <div class="shortcut-item">
+                                            <kbd>1</kbd>
+                                            <span>Library Tab</span>
+                                        </div>
+                                        <div class="shortcut-item">
+                                            <kbd>2</kbd>
+                                            <span>Playlists Tab</span>
+                                        </div>
+                                        <div class="shortcut-item">
+                                            <kbd>3</kbd>
+                                            <span>Albums Tab</span>
+                                        </div>
+                                        <div class="shortcut-item">
+                                            <kbd>4</kbd>
+                                            <span>Upload Tab</span>
+                                        </div>
+                                        <div class="shortcut-item">
+                                            <kbd>5</kbd>
+                                            <span>Settings Tab</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <!-- Appearance Settings -->
                         <div class="settings-panel active" id="appearance-settings">
                             <div class="theme-section">
@@ -802,26 +1008,6 @@
                     <input type="range" class="vinyl-volume-slider" id="vinyl-volume" min="0" max="100" value="70">
                 </div>
                 
-                <!-- Audio Visualizer Bars -->
-                <div class="audio-visualizer" id="audio-visualizer">
-                    <div class="visualizer-bar"></div>
-                    <div class="visualizer-bar"></div>
-                    <div class="visualizer-bar"></div>
-                    <div class="visualizer-bar"></div>
-                    <div class="visualizer-bar"></div>
-                    <div class="visualizer-bar"></div>
-                    <div class="visualizer-bar"></div>
-                    <div class="visualizer-bar"></div>
-                    <div class="visualizer-bar"></div>
-                    <div class="visualizer-bar"></div>
-                    <div class="visualizer-bar"></div>
-                    <div class="visualizer-bar"></div>
-                    <div class="visualizer-bar"></div>
-                    <div class="visualizer-bar"></div>
-                    <div class="visualizer-bar"></div>
-                    <div class="visualizer-bar"></div>
-                </div>
-                
                 <!-- Queue Preview -->
                 <div class="vinyl-queue">
                     <h4>Up Next</h4>
@@ -922,6 +1108,26 @@
                     <polyline points="21 15 16 10 5 21" stroke-width="2"/>
                 </svg>
                 <span>Change Image</span>
+            </div>
+            <div class="context-menu-divider song-only"></div>
+            <div class="context-menu-item song-only" data-action="play-next">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <polygon points="5 3 19 12 5 21 5 3" stroke-width="2"/>
+                </svg>
+                <span>Play Next</span>
+            </div>
+            <div class="context-menu-item song-only" data-action="add-to-queue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 5v14M5 12h14" stroke-width="2"/>
+                </svg>
+                <span>Add to Queue</span>
+            </div>
+            <div class="context-menu-item song-only" data-action="start-radio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="12" r="2" stroke-width="2"/>
+                    <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14" stroke-width="2"/>
+                </svg>
+                <span>📻 Start Radio</span>
             </div>
             <!-- Playlist-only options -->
             <div class="context-menu-item playlist-only" data-action="play-playlist">
@@ -1380,5 +1586,13 @@
     <script src="{{ url_for('static', filename='js/context-menu.js') }}"></script>
     <script src="{{ url_for('static', filename='js/ai-chat.js') }}"></script>
     <script src="{{ url_for('static', filename='js/features.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/audio-features.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/advanced-features.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/stats-dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/waveform.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/social.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/enhanced-visualizer.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/podcast-radio.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/mini-player-themes.js') }}"></script>
 </body>
 </html>

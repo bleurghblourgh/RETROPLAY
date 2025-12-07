@@ -293,13 +293,14 @@ function displayRecentlyPlayed(songs) {
         contentHeader.insertAdjacentElement('afterend', recentSection);
     }
     
+    recentSection.style.display = 'block';
     recentSection.innerHTML = `
         <div class="section-header">
             <h3>🕐 Recently Played</h3>
-            <button class="btn-link-small" onclick="document.getElementById('recently-played-section').style.display='none'">Hide</button>
+            <button class="btn-link-small" onclick="toggleRecentlyPlayed()" id="recent-toggle-btn">Hide</button>
         </div>
-        <div class="recent-songs-row">
-            ${songs.slice(0, 6).map((song, i) => `
+        <div class="recent-songs-row" id="recent-songs-content">
+            ${songs.slice(0, 6).map((song) => `
                 <div class="recent-song-card" onclick="playSongById(${song.songId})">
                     <div class="recent-song-art">
                         ${song.customImage || song.albumArt ? 
@@ -385,24 +386,23 @@ let sleepTimerId = null;
 let sleepTimeRemaining = 0;
 
 function setupSleepTimer() {
-    // Add sleep timer button to vinyl panel or settings
-    const vinylControls = document.querySelector('.vinyl-controls');
-    if (vinylControls && !document.getElementById('sleep-timer-btn')) {
-        const timerBtn = document.createElement('button');
-        timerBtn.id = 'sleep-timer-btn';
-        timerBtn.className = 'vinyl-control-btn';
-        timerBtn.title = 'Sleep Timer';
-        timerBtn.innerHTML = `
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"/>
-                <polyline points="12 6 12 12 16 14"/>
-            </svg>
-        `;
-        timerBtn.onclick = showSleepTimerModal;
-        vinylControls.appendChild(timerBtn);
-    }
-    
+    // Sleep timer is now in the sidebar (HTML), no dynamic creation needed
     console.log('[Features] Sleep timer enabled');
+}
+
+function updateSidebarSleepTimer() {
+    const countdown = document.getElementById('sleep-timer-countdown');
+    const timeDisplay = document.getElementById('sidebar-sleep-time');
+    const timerSection = document.getElementById('sidebar-sleep-timer');
+    
+    if (sleepTimerId && sleepTimeRemaining > 0) {
+        if (countdown) countdown.style.display = 'flex';
+        if (timeDisplay) timeDisplay.textContent = formatSleepTime(sleepTimeRemaining);
+        if (timerSection) timerSection.classList.add('active');
+    } else {
+        if (countdown) countdown.style.display = 'none';
+        if (timerSection) timerSection.classList.remove('active');
+    }
 }
 
 function showSleepTimerModal() {
@@ -448,17 +448,17 @@ function setSleepTimer(minutes) {
     }
     
     sleepTimeRemaining = minutes * 60;
+    updateSidebarSleepTimer();
     
     sleepTimerId = setInterval(() => {
         sleepTimeRemaining--;
         
+        // Update sidebar countdown
+        updateSidebarSleepTimer();
+        
         // Update display if modal is open
         const display = document.getElementById('sleep-time-display');
         if (display) display.textContent = formatSleepTime(sleepTimeRemaining);
-        
-        // Update button indicator
-        const timerBtn = document.getElementById('sleep-timer-btn');
-        if (timerBtn) timerBtn.classList.add('active');
         
         if (sleepTimeRemaining <= 0) {
             // Stop playback
@@ -493,8 +493,7 @@ function cancelSleepTimer() {
         sleepTimerId = null;
         sleepTimeRemaining = 0;
         
-        const timerBtn = document.getElementById('sleep-timer-btn');
-        if (timerBtn) timerBtn.classList.remove('active');
+        updateSidebarSleepTimer();
         
         showNotification('Sleep timer cancelled', 'info');
     }
@@ -530,12 +529,53 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('[Features] All quick win features initialized');
 });
 
+// Toggle recently played visibility
+let recentlyPlayedHidden = false;
+
+function toggleRecentlyPlayed() {
+    const section = document.getElementById('recently-played-section');
+    const content = document.getElementById('recent-songs-content');
+    const btn = section?.querySelector('.btn-link-small');
+    
+    if (!section || !content) return;
+    
+    recentlyPlayedHidden = !recentlyPlayedHidden;
+    
+    if (recentlyPlayedHidden) {
+        content.style.display = 'none';
+        if (btn) btn.textContent = 'Show';
+    } else {
+        content.style.display = 'flex';
+        if (btn) btn.textContent = 'Hide';
+    }
+}
+
 // Make functions global
 window.toggleLike = toggleLike;
 window.likeCurrentSong = likeCurrentSong;
 window.loadLikedSongs = loadLikedSongs;
 window.loadRecentlyPlayed = loadRecentlyPlayed;
+window.toggleRecentlyPlayed = toggleRecentlyPlayed;
+
+// Toggle recently played section visibility
+function toggleRecentlyPlayed() {
+    const section = document.getElementById('recently-played-section');
+    const content = document.getElementById('recent-songs-content');
+    const btn = document.getElementById('recent-toggle-btn');
+    
+    if (!section || !content || !btn) return;
+    
+    if (content.style.display === 'none') {
+        content.style.display = 'flex';
+        btn.textContent = 'Hide';
+    } else {
+        content.style.display = 'none';
+        btn.textContent = 'Show';
+    }
+}
 window.setSleepTimer = setSleepTimer;
 window.setCustomSleepTimer = setCustomSleepTimer;
 window.cancelSleepTimer = cancelSleepTimer;
 window.showSleepTimerModal = showSleepTimerModal;
+window.updateSidebarSleepTimer = updateSidebarSleepTimer;
+window.toggleRecentlyPlayed = toggleRecentlyPlayed;

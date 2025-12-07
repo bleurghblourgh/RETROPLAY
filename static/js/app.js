@@ -570,8 +570,14 @@ function playSong(song) {
             console.log('Playback started successfully');
         })
         .catch(error => {
-            console.error('Playback error:', error);
-            showNotification('Failed to play song', 'error');
+            // Only show error if it's not an autoplay policy issue
+            // AbortError happens when play() is interrupted by a new play() call
+            if (error.name !== 'AbortError' && error.name !== 'NotAllowedError') {
+                console.error('Playback error:', error);
+                showNotification('Failed to play song', 'error');
+            } else {
+                console.log('Play interrupted or autoplay blocked:', error.name);
+            }
             isPlaying = false;
             updatePlayButton();
         });

@@ -59,6 +59,7 @@
 
 .recent-song-card {
     flex: 0 0 120px;
+    max-width: 120px;
     cursor: pointer;
     transition: transform 0.2s ease;
 }
@@ -96,6 +97,7 @@
     font-size: 13px;
     font-weight: 600;
     color: var(--text-primary);
+    max-width: 120px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -104,6 +106,7 @@
 .recent-song-artist {
     font-size: 11px;
     color: var(--text-secondary);
+    max-width: 120px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -154,7 +157,86 @@
 }
 
 /* ============================================
-   SLEEP TIMER
+   SIDEBAR SLEEP TIMER
+   ============================================ */
+
+.sidebar-sleep-timer {
+    padding: 0.75rem 1rem;
+    margin: 0 0.75rem 0.5rem;
+    background: var(--bg-mid);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.sidebar-sleep-timer.active {
+    border-color: var(--primary);
+    background: rgba(236, 72, 153, 0.1);
+}
+
+.sleep-timer-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.sleep-timer-header:hover {
+    color: var(--primary);
+}
+
+.sidebar-sleep-timer.active .sleep-timer-header {
+    color: var(--primary);
+}
+
+.sleep-timer-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.sleep-timer-countdown {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+}
+
+#sidebar-sleep-time {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+}
+
+.sleep-cancel-btn {
+    width: 24px;
+    height: 24px;
+    background: rgba(255, 100, 100, 0.2);
+    border: none;
+    border-radius: 50%;
+    color: #ff6b6b;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.sleep-cancel-btn:hover {
+    background: rgba(255, 100, 100, 0.4);
+    transform: scale(1.1);
+}
+
+/* ============================================
+   SLEEP TIMER MODAL
    ============================================ */
 
 .sleep-timer-options {
@@ -205,6 +287,76 @@
 @keyframes pulse-glow {
     0%, 100% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.4); }
     50% { box-shadow: 0 0 0 8px rgba(236, 72, 153, 0); }
+}
+
+/* ============================================
+   KEYBOARD SHORTCUTS SETTINGS
+   ============================================ */
+
+.shortcuts-section {
+    padding: 1rem;
+}
+
+.shortcuts-section h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.shortcuts-subtitle {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 1.5rem;
+}
+
+.shortcuts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.shortcut-category {
+    background: var(--bg-mid);
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid var(--border);
+}
+
+.shortcut-category h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.shortcut-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    font-size: 13px;
+}
+
+.shortcut-item span {
+    color: var(--text-secondary);
+}
+
+.shortcut-item kbd {
+    display: inline-block;
+    padding: 4px 8px;
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    box-shadow: 0 2px 0 var(--border);
+    min-width: 28px;
+    text-align: center;
 }
 
 /* ============================================
@@ -268,6 +420,76 @@
 }
 
 /* ============================================
+   NOTIFICATION TOAST - COMPACT TOP RIGHT
+   ============================================ */
+
+.notification {
+    position: fixed !important;
+    top: 16px !important;
+    right: 16px !important;
+    bottom: auto !important;
+    left: auto !important;
+    padding: 10px 14px !important;
+    background: var(--bg-mid) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    color: var(--text-primary) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+    z-index: 99999 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    max-width: 280px !important;
+    min-width: auto !important;
+    width: auto !important;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease !important;
+    animation: none !important;
+}
+
+.notification.show {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+}
+
+.notification .notif-icon {
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 11px !important;
+    flex-shrink: 0 !important;
+}
+
+.notification .notif-msg {
+    flex: 1;
+    line-height: 1.3;
+    font-size: 13px !important;
+}
+
+.notification.notification-success {
+    border-left: 3px solid #10B981 !important;
+}
+
+.notification.notification-error {
+    border-left: 3px solid #EF4444 !important;
+}
+
+.notification.notification-info {
+    border-left: 3px solid var(--primary) !important;
+}
+
+.notification.notification-warning {
+    border-left: 3px solid #F59E0B !important;
+}
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 
@@ -293,4 +515,957 @@
         min-width: 120px;
         font-size: 12px;
     }
+    
+    .notification {
+        max-width: 240px !important;
+        right: 10px !important;
+        top: 10px !important;
+    }
+}
+
+
+/* ============================================
+   EQUALIZER
+   ============================================ */
+
+.eq-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--bg-dark);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.eq-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.eq-presets {
+    margin-bottom: 1.5rem;
+}
+
+.eq-preset-select {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    background: var(--bg-mid);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.eq-preset-select:hover {
+    border-color: var(--primary);
+}
+
+.eq-sliders {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 1rem 0;
+}
+
+.eq-band {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.eq-slider {
+    -webkit-appearance: slider-vertical;
+    appearance: slider-vertical;
+    width: 24px;
+    height: 100px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.eq-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    background: var(--primary);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 8px var(--primary);
+}
+
+.eq-slider::-webkit-slider-runnable-track {
+    width: 6px;
+    background: var(--bg-light);
+    border-radius: 3px;
+}
+
+.eq-freq {
+    font-size: 10px;
+    color: var(--text-secondary);
+    text-align: center;
+    min-width: 24px;
+}
+
+/* ============================================
+   LYRICS PANEL
+   ============================================ */
+
+.lyrics-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bg-dark);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+}
+
+.lyrics-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.lyrics-header h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.lyrics-close {
+    width: 32px;
+    height: 32px;
+    background: var(--bg-mid);
+    border: none;
+    border-radius: 50%;
+    color: var(--text-secondary);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.lyrics-close:hover {
+    background: var(--bg-light);
+    color: var(--primary);
+}
+
+.lyrics-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+}
+
+.lyrics-content {
+    color: var(--text-primary);
+}
+
+.lyrics-text {
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 2;
+    white-space: pre-wrap;
+    color: var(--text-secondary);
+}
+
+.lyrics-loading,
+.lyrics-not-found,
+.lyrics-placeholder {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.lyrics-loading {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ============================================
+   SONG DURATION IN CARDS
+   ============================================ */
+
+.song-card {
+    position: relative;
+}
+
+.song-card .song-duration {
+    font-size: 12px !important;
+    color: var(--text-secondary) !important;
+    font-family: 'Courier New', monospace;
+    min-width: 45px;
+    text-align: right;
+    flex-shrink: 0;
+    margin-left: 0 !important;
+    padding-left: 0.5rem !important;
+}
+
+/* Ensure like button and duration are properly aligned */
+.song-card .like-btn {
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+
+/* ============================================
+   FOLDER UPLOAD
+   ============================================ */
+
+.upload-mode-btns {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.upload-mode-btn {
+    padding: 0.5rem 1rem;
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.upload-mode-btn:hover {
+    border-color: var(--primary);
+    color: var(--text-primary);
+}
+
+.upload-mode-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+/* ============================================
+   SMART PLAYLISTS
+   ============================================ */
+
+.smart-playlists-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--bg-mid);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+}
+
+.smart-playlists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.smart-playlist-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.smart-playlist-card:hover {
+    border-color: var(--primary);
+    background: var(--bg-light);
+    transform: translateY(-2px);
+}
+
+.smart-playlist-icon {
+    font-size: 28px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 10px;
+}
+
+.smart-playlist-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.smart-playlist-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.smart-playlist-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ============================================
+   QUEUE MANAGEMENT
+   ============================================ */
+
+.queue-controls {
+    display: flex;
+    gap: 0.25rem;
+    margin-left: auto;
+}
+
+.queue-ctrl-btn {
+    width: 28px;
+    height: 28px;
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.queue-ctrl-btn:hover {
+    background: var(--bg-light);
+    border-color: var(--primary);
+}
+
+/* Draggable queue items */
+.queue-item {
+    cursor: grab;
+    transition: all 0.2s ease;
+}
+
+.queue-item:active {
+    cursor: grabbing;
+}
+
+.queue-item.dragging {
+    opacity: 0.5;
+    background: var(--primary);
+}
+
+.queue-item[draggable="true"]:hover {
+    background: var(--bg-light);
+}
+
+/* Context menu separator */
+.context-menu-separator {
+    height: 1px;
+    background: var(--border);
+    margin: 0.5rem 0;
+}
+
+.context-menu-item.queue-option {
+    color: var(--primary);
+}
+
+
+/* ============================================
+   STATS DASHBOARD
+   ============================================ */
+
+.stats-period-selector {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.period-btn {
+    padding: 0.5rem 1rem;
+    background: var(--bg-mid);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.period-btn:hover {
+    border-color: var(--primary);
+    color: var(--text-primary);
+}
+
+.period-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.stats-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.stats-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.stat-card {
+    background: var(--bg-mid);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.stat-icon {
+    font-size: 32px;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.stats-section {
+    background: var(--bg-mid);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.stats-section.full-width {
+    grid-column: 1 / -1;
+}
+
+.stats-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.top-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.top-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    background: var(--bg-dark);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.top-item:hover {
+    background: var(--bg-light);
+}
+
+.top-rank {
+    width: 28px;
+    height: 28px;
+    background: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+}
+
+.top-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.top-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.top-plays {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.top-bar {
+    width: 80px;
+    height: 6px;
+    background: var(--bg-mid);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.top-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.empty-stats {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* Activity Chart */
+.activity-chart {
+    height: 150px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.chart-bars {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 25px;
+}
+
+.chart-bar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+}
+
+.chart-bar {
+    width: 70%;
+    max-width: 40px;
+    background: linear-gradient(180deg, var(--primary), var(--secondary));
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    transition: height 0.3s ease;
+    min-height: 4px;
+}
+
+.chart-bar:hover {
+    opacity: 0.8;
+}
+
+.chart-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-dark);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+.chart-bar:hover .chart-tooltip {
+    opacity: 1;
+}
+
+.chart-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+}
+
+/* ============================================
+   WAVEFORM DISPLAY
+   ============================================ */
+
+.waveform-container {
+    width: 100%;
+    height: 60px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg-dark);
+}
+
+.waveform-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.waveform-container:hover {
+    opacity: 0.9;
+}
+
+/* Loading placeholder */
+.loading-placeholder {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+
+/* ============================================
+   SOCIAL FEATURES
+   ============================================ */
+
+.share-url-box {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.share-url-input {
+    flex: 1;
+    padding: 0.75rem;
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 13px;
+}
+
+.share-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.share-btn {
+    flex: 1;
+    padding: 0.75rem;
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.share-btn:hover {
+    background: var(--bg-light);
+    border-color: var(--primary);
+}
+
+/* Activity Feed */
+.activity-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: var(--bg-dark);
+    border-radius: 10px;
+}
+
+.activity-avatar {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+}
+
+.activity-content {
+    flex: 1;
+    font-size: 13px;
+}
+
+.activity-user {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.activity-action {
+    color: var(--text-secondary);
+}
+
+.activity-target {
+    color: var(--primary);
+}
+
+.activity-time {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.empty-feed {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+}
+
+
+/* ========== PODCASTS TAB ========== */
+.podcasts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem 0;
+}
+
+.podcast-settings-card {
+    background: var(--bg-mid);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.podcast-settings-card h3 {
+    margin-bottom: 1rem;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.podcast-setting {
+    margin-bottom: 1rem;
+}
+
+.podcast-setting label {
+    display: block;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.speed-selector {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.speed-option {
+    padding: 0.5rem 1rem;
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.speed-option:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.speed-option.active {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-color: transparent;
+    color: white;
+}
+
+.skip-settings {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.skip-setting {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.skip-setting span {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.skip-setting select {
+    padding: 0.5rem;
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 13px;
+}
+
+.podcast-section {
+    background: var(--bg-mid);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.podcast-section h3 {
+    margin-bottom: 0.5rem;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.section-subtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.podcast-episodes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.podcast-episode {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-dark);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.podcast-episode:hover {
+    background: var(--bg-light);
+}
+
+.podcast-episode-art {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.podcast-episode-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.podcast-episode-title {
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.podcast-episode-meta {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+.podcast-episode-progress {
+    width: 100%;
+    height: 4px;
+    background: var(--bg-mid);
+    border-radius: 2px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+}
+
+.podcast-episode-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 2px;
+}
+
+.podcast-episode-duration {
+    font-size: 12px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+
+/* ========== PODCAST UPLOAD ZONE ========== */
+.podcast-upload-section {
+    margin-bottom: 1rem;
+}
+
+.podcast-upload-zone {
+    background: var(--bg-mid);
+    border: 2px dashed var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.podcast-upload-zone:hover {
+    border-color: var(--primary);
+    background: var(--bg-light);
+}
+
+.podcast-upload-zone.dragover {
+    border-color: var(--primary);
+    background: rgba(236, 72, 153, 0.1);
+}
+
+.podcast-upload-icon {
+    font-size: 48px;
+    margin-bottom: 1rem;
+}
+
+.podcast-upload-zone h3 {
+    font-size: 18px;
+    margin-bottom: 0.5rem;
+}
+
+.podcast-upload-zone p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 0.25rem;
+}
+
+.upload-hint {
+    font-size: 12px !important;
+    color: var(--primary) !important;
+    margin-top: 0.5rem !important;
 }

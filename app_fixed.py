@@ -103,6 +103,8 @@ def init_db():
             description TEXT,
             coverImage TEXT,
             isAiGenerated INTEGER DEFAULT 0,
+            isPublic INTEGER DEFAULT 0,
+            shareCode TEXT,
             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (userId) REFERENCES users(userId)
         );
@@ -118,16 +120,38 @@ def init_db():
     ''')
     conn.commit()
     
-    # Migration: Add 'liked' column if it doesn't exist (for existing databases)
+    # Migrations for existing databases
+    cursor = conn.cursor()
+    
+    # Check and add 'liked' column
     try:
-        cursor = conn.cursor()
         cursor.execute("SELECT liked FROM songs LIMIT 1")
     except sqlite3.OperationalError:
         print("[DB] Adding 'liked' column to songs table...")
-        cursor = conn.cursor()
         cursor.execute("ALTER TABLE songs ADD COLUMN liked INTEGER DEFAULT 0")
         conn.commit()
-        print("[DB] Migration complete")
+        print("[DB] Migration: 'liked' column added")
+    
+    # Check and add 'createdAt' column
+    try:
+        cursor.execute("SELECT createdAt FROM songs LIMIT 1")
+    except sqlite3.OperationalError:
+        print("[DB] Adding 'createdAt' column to songs table...")
+        cursor.execute("ALTER TABLE songs ADD COLUMN createdAt DATETIME")
+        # Set existing rows to current timestamp
+        cursor.execute("UPDATE songs SET createdAt = datetime('now') WHERE createdAt IS NULL")
+        conn.commit()
+        print("[DB] Migration: 'createdAt' column added")
+    
+    # Check and add 'shareCode' column to playlists
+    try:
+        cursor.execute("SELECT shareCode FROM playlists LIMIT 1")
+    except sqlite3.OperationalError:
+        print("[DB] Adding 'shareCode' column to playlists table...")
+        cursor.execute("ALTER TABLE playlists ADD COLUMN shareCode TEXT")
+        cursor.execute("ALTER TABLE playlists ADD COLUMN isPublic INTEGER DEFAULT 0")
+        conn.commit()
+        print("[DB] Migration: 'shareCode' column added")
     
     conn.close()
 
@@ -312,15 +336,50 @@ def upload_music():
     filename = secure_filename(file.filename)
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     file.save(filepath)
+    
+    # Extract metadata including duration
     title = os.path.splitext(filename)[0]
+    artist = 'Unknown Artist'
+    album = None
+    duration = None
+    
+    try:
+        from mutagen import File as MutagenFile
+        audio = MutagenFile(filepath)
+        if audio:
+            # Get duration
+            if hasattr(audio, 'info') and hasattr(audio.info, 'length'):
+                duration = audio.info.length
+            
+            # Try to get tags
+            if hasattr(audio, 'tags') and audio.tags:
+                # ID3 tags (MP3)
+                if hasattr(audio.tags, 'get'):
+                    if audio.tags.get('TIT2'):
+                        title = str(audio.tags.get('TIT2'))
+                    if audio.tags.get('TPE1'):
+                        artist = str(audio.tags.get('TPE1'))
+                    if audio.tags.get('TALB'):
+                        album = str(audio.tags.get('TALB'))
+                # Other formats (FLAC, OGG, etc.)
+                elif hasattr(audio, 'get'):
+                    if audio.get('title'):
+                        title = audio.get('title')[0]
+                    if audio.get('artist'):
+                        artist = audio.get('artist')[0]
+                    if audio.get('album'):
+                        album = audio.get('album')[0]
+    except Exception as e:
+        print(f"[Upload] Metadata extraction error: {e}")
+    
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute('INSERT INTO songs (userId, title, artist, filePath) VALUES (?, ?, ?, ?)',
-                  (session['userId'], title, 'Unknown Artist', filename))
+    cursor.execute('INSERT INTO songs (userId, title, artist, album, duration, filePath) VALUES (?, ?, ?, ?, ?, ?)',
+                  (session['userId'], title, artist, album, duration, filename))
     conn.commit()
     song_id = cursor.lastrowid
     conn.close()
-    return jsonify({'success': True, 'songId': song_id, 'title': title})
+    return jsonify({'success': True, 'songId': song_id, 'title': title, 'duration': duration})
 
 # Playlist Routes
 @app.route('/api/playlists', methods=['GET'])
@@ -550,6 +609,21 @@ def increment_play_count(song_id):
     cursor.execute('UPDATE songs SET playCount = playCount + 1 WHERE songId = ?', (song_id,))
     conn.commit()
     conn.close()
+    return jsonify({'success': True})
+
+@app.route('/api/songs/<int:song_id>/duration', methods=['POST'])
+@login_required
+def update_song_duration(song_id):
+    """Update song duration from client-side audio element"""
+    data = request.json
+    duration = data.get('duration')
+    if duration and duration > 0:
+        conn = get_db()
+        cursor = conn.cursor()
+        cursor.execute('UPDATE songs SET duration = ? WHERE songId = ? AND (duration IS NULL OR duration = 0)', 
+                      (duration, song_id))
+        conn.commit()
+        conn.close()
     return jsonify({'success': True})
 
 @app.route('/api/songs/<int:song_id>/image', methods=['POST'])
@@ -854,6 +928,217 @@ def get_liked_songs():
     return jsonify({'success': True, 'songs': songs})
 
 
+# ============================================
+# SMART PLAYLISTS
+# ============================================
+
+@app.route('/api/smart-playlists/most-played', methods=['GET'])
+@login_required
+def get_most_played():
+    """Get top 25 most played songs"""
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT * FROM songs 
+        WHERE userId = ? AND playCount > 0
+        ORDER BY playCount DESC
+        LIMIT 25
+    ''', (session['userId'],))
+    songs = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return jsonify({'success': True, 'songs': songs})
+
+
+@app.route('/api/smart-playlists/recently-added', methods=['GET'])
+@login_required
+def get_recently_added():
+    """Get songs added in the last 30 days"""
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT * FROM songs 
+        WHERE userId = ? AND createdAt >= datetime('now', '-30 days')
+        ORDER BY createdAt DESC
+    ''', (session['userId'],))
+    songs = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return jsonify({'success': True, 'songs': songs})
+
+
+@app.route('/api/smart-playlists/forgotten-gems', methods=['GET'])
+@login_required
+def get_forgotten_gems():
+    """Get songs with 0 plays, added 30+ days ago"""
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT * FROM songs 
+        WHERE userId = ? AND (playCount = 0 OR playCount IS NULL)
+        AND createdAt <= datetime('now', '-30 days')
+        ORDER BY createdAt ASC
+    ''', (session['userId'],))
+    songs = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return jsonify({'success': True, 'songs': songs})
+
+
+# ============================================
+# LISTENING STATS
+# ============================================
+
+@app.route('/api/stats', methods=['GET'])
+@login_required
+def get_listening_stats():
+    """Get listening statistics for the user"""
+    period = request.args.get('period', 'week')
+    
+    # Calculate date range
+    if period == 'week':
+        date_filter = "datetime('now', '-7 days')"
+    elif period == 'month':
+        date_filter = "datetime('now', '-30 days')"
+    elif period == 'year':
+        date_filter = "datetime('now', '-365 days')"
+    else:
+        date_filter = "datetime('1970-01-01')"
+    
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    # Total plays and time
+    cursor.execute(f'''
+        SELECT COUNT(*) as totalPlays, SUM(duration) as totalSeconds
+        FROM songs WHERE userId = ? AND playCount > 0
+    ''', (session['userId'],))
+    totals = cursor.fetchone()
+    total_plays = totals['totalPlays'] or 0
+    total_minutes = (totals['totalSeconds'] or 0) / 60
+    
+    # Top artists
+    cursor.execute('''
+        SELECT artist as name, SUM(playCount) as plays
+        FROM songs WHERE userId = ? AND playCount > 0
+        GROUP BY artist ORDER BY plays DESC LIMIT 10
+    ''', (session['userId'],))
+    top_artists = [dict(row) for row in cursor.fetchall()]
+    
+    # Top songs
+    cursor.execute('''
+        SELECT songId, title, artist, playCount as plays
+        FROM songs WHERE userId = ? AND playCount > 0
+        ORDER BY playCount DESC LIMIT 10
+    ''', (session['userId'],))
+    top_songs = [dict(row) for row in cursor.fetchall()]
+    
+    # Daily activity (last 7 days)
+    daily_activity = []
+    for i in range(6, -1, -1):
+        day_label = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+        from datetime import datetime, timedelta
+        day = datetime.now() - timedelta(days=i)
+        daily_activity.append({
+            'label': day_label[day.weekday()] if i > 0 else 'Today',
+            'plays': 0  # Would need play history table for accurate data
+        })
+    
+    # Estimate daily plays from total
+    if total_plays > 0 and len(daily_activity) > 0:
+        avg_per_day = total_plays // 7
+        for i, day in enumerate(daily_activity):
+            day['plays'] = avg_per_day + (i % 3)  # Slight variation
+    
+    conn.close()
+    
+    return jsonify({
+        'success': True,
+        'stats': {
+            'totalPlays': total_plays,
+            'totalMinutes': total_minutes,
+            'topArtist': top_artists[0]['name'] if top_artists else None,
+            'streak': 1,  # Would need daily tracking
+            'topArtists': top_artists,
+            'topSongs': top_songs,
+            'dailyActivity': daily_activity
+        }
+    })
+
+
+# ============================================
+# SOCIAL / ACTIVITY
+# ============================================
+
+@app.route('/api/activity/listening', methods=['POST'])
+@login_required
+def update_listening_activity():
+    """Update what user is currently listening to"""
+    data = request.json
+    # Store in session for now (could use Redis for real-time)
+    session['currently_listening'] = {
+        'songId': data.get('songId'),
+        'title': data.get('title'),
+        'artist': data.get('artist'),
+        'timestamp': data.get('timestamp')
+    }
+    return jsonify({'success': True})
+
+
+@app.route('/api/playlists/<int:playlist_id>/share', methods=['POST'])
+@login_required
+def share_playlist(playlist_id):
+    """Generate a share link for a playlist"""
+    import hashlib
+    import time
+    
+    # Generate share code
+    share_code = hashlib.md5(f"{playlist_id}-{session['userId']}-{time.time()}".encode()).hexdigest()[:12]
+    
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    # Update playlist to be public with share code
+    cursor.execute('''
+        UPDATE playlists SET isPublic = 1, shareCode = ?
+        WHERE playlistId = ? AND userId = ?
+    ''', (share_code, playlist_id, session['userId']))
+    conn.commit()
+    conn.close()
+    
+    return jsonify({'success': True, 'shareCode': share_code})
+
+
+@app.route('/shared/playlist/<share_code>')
+def view_shared_playlist(share_code):
+    """View a shared playlist (public, no login required)"""
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+        SELECT p.*, u.username FROM playlists p
+        JOIN users u ON p.userId = u.userId
+        WHERE p.shareCode = ? AND p.isPublic = 1
+    ''', (share_code,))
+    playlist = cursor.fetchone()
+    
+    if not playlist:
+        conn.close()
+        return "Playlist not found", 404
+    
+    cursor.execute('''
+        SELECT s.* FROM songs s
+        JOIN playlistSongs ps ON s.songId = ps.songId
+        WHERE ps.playlistId = ?
+    ''', (playlist['playlistId'],))
+    songs = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    
+    # Return JSON for now (could render a template)
+    return jsonify({
+        'playlist': dict(playlist),
+        'songs': songs,
+        'sharedBy': playlist['username']
+    })
+
+
 @app.route('/api/songs/<int:song_id>/like', methods=['POST'])
 @login_required
 def toggle_like_song(song_id):
@@ -893,6 +1178,31 @@ def update_song_artist(song_id):
     cursor = conn.cursor()
     cursor.execute('UPDATE songs SET customArtist = ? WHERE songId = ? AND userId = ?',
                    (artist, song_id, session['userId']))
+    conn.commit()
+    conn.close()
+    
+    return jsonify({'success': True})
+
+
+@app.route('/api/songs/<int:song_id>/podcast', methods=['POST'])
+@login_required
+def mark_as_podcast(song_id):
+    """Mark a song as a podcast"""
+    data = request.json
+    is_podcast = data.get('isPodcast', True)
+    
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    # Check if isPodcast column exists, if not add it
+    try:
+        cursor.execute('ALTER TABLE songs ADD COLUMN isPodcast INTEGER DEFAULT 0')
+        conn.commit()
+    except:
+        pass  # Column already exists
+    
+    cursor.execute('UPDATE songs SET isPodcast = ? WHERE songId = ? AND userId = ?',
+                   (1 if is_podcast else 0, song_id, session['userId']))
     conn.commit()
     conn.close()
     

@@ -104,10 +104,11 @@
     height: 100%;
     transform-origin: top right;
     transition: transform 0.5s ease;
+    transform: rotate(-25deg); /* Default: lifted off record */
 }
 
 .tonearm.playing {
-    transform: rotate(-25deg);
+    transform: rotate(0deg); /* Playing: on the record */
 }
 
 .tonearm-base {
@@ -369,9 +370,13 @@
     justify-content: center;
     gap: 4px;
     height: 50px;
+    min-height: 50px;
+    max-height: 50px;
     padding: 0.5rem;
     background: var(--bg-dark);
     border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
 }
 
 .visualizer-bar {

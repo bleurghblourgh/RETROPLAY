@@ -148,12 +148,48 @@ async function handleContextMenuAction(e) {
         await playPlaylistFromMenu();
     } else if (action === 'rename-playlist') {
         await renamePlaylistFromMenu();
+    } else if (action === 'play-next') {
+        await playNextFromMenu();
+    } else if (action === 'add-to-queue') {
+        await addToQueueFromMenu();
+    } else if (action === 'start-radio') {
+        await startRadioFromMenu();
     } else if (action.startsWith('add-to-playlist-')) {
         const playlistId = action.replace('add-to-playlist-', '');
         await addToPlaylist(playlistId);
     }
     
     hideContextMenu();
+}
+
+async function startRadioFromMenu() {
+    if (!contextMenuTarget) return;
+    const songId = contextMenuTarget.dataset.songId;
+    const song = (window.allSongs || []).find(s => s.songId == songId) ||
+                (window.currentQueue || []).find(s => s.songId == songId);
+    if (song && window.radioMode) {
+        window.radioMode.startRadio(song);
+    }
+}
+
+async function playNextFromMenu() {
+    if (!contextMenuTarget) return;
+    const songId = contextMenuTarget.dataset.songId;
+    const song = (window.allSongs || []).find(s => s.songId == songId) ||
+                (window.currentQueue || []).find(s => s.songId == songId);
+    if (song && typeof playNextSong === 'function') {
+        playNextSong(song);
+    }
+}
+
+async function addToQueueFromMenu() {
+    if (!contextMenuTarget) return;
+    const songId = contextMenuTarget.dataset.songId;
+    const song = (window.allSongs || []).find(s => s.songId == songId) ||
+                (window.currentQueue || []).find(s => s.songId == songId);
+    if (song && typeof addToQueue === 'function') {
+        addToQueue(song);
+    }
 }
 
 async function playPlaylistFromMenu() {

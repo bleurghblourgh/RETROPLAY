@@ -601,6 +601,12 @@ class VinylPanelController {
     }
     
     toggleFullscreen() {
+        // Use enhanced visualizer if available
+        if (window.enhancedFS) {
+            window.enhancedFS.open();
+            return;
+        }
+        
         let modal = document.getElementById('fullscreen-visualizer');
         
         if (modal) {
