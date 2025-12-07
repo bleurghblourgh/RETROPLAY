@@ -45,6 +45,25 @@ Then open **http://localhost:5000** in your browser.
 | 📊 **Stats Dashboard** | Track your listening habits |
 | 🔀 **Crossfade** | Smooth transitions between songs |
 | 📝 **Lyrics Display** | Auto-fetch lyrics for current song |
+| 🖥️ **Desktop App** | Electron wrapper with system tray & media keys |
+
+---
+
+## 🖥️ Desktop App (NEW!)
+
+Run RETROPLAY as a native desktop application with:
+- **System Tray** - Minimize to tray, quick playback controls
+- **Media Keys** - Control playback with keyboard media keys
+- **Native Notifications** - Song change notifications
+
+### Quick Start (Desktop)
+```bash
+cd electron
+npm install
+npm start
+```
+
+Or on Windows, just double-click `START_DESKTOP.bat`
 
 ---
 

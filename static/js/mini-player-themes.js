@@ -119,29 +119,30 @@ const MiniPlayer = {
             vinylHeader.appendChild(pipBtn);
         }
         
-        // Add floating toggle button in sidebar (always visible)
-        const sidebar = document.querySelector('.sidebar-nav');
-        if (sidebar && !document.getElementById('mini-player-toggle')) {
-            const toggleBtn = document.createElement('button');
-            toggleBtn.id = 'mini-player-toggle';
-            toggleBtn.className = 'nav-item mini-player-nav-btn';
-            toggleBtn.title = this.pipSupported ? 'Picture-in-Picture Player' : 'Mini Player';
-            toggleBtn.innerHTML = `
-                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="2" y="3" width="20" height="14" rx="2"/>
-                    <rect x="12" y="10" width="8" height="6" rx="1" fill="currentColor" opacity="0.3"/>
-                </svg>
-                <span>PiP Player</span>
+        // Add PiP toggle button near sleep timer in sidebar
+        const sleepTimer = document.querySelector('.sidebar-sleep-timer');
+        if (sleepTimer && !document.getElementById('sidebar-pip-toggle')) {
+            const pipSection = document.createElement('div');
+            pipSection.className = 'sidebar-pip-player';
+            pipSection.id = 'sidebar-pip-toggle';
+            pipSection.innerHTML = `
+                <div class="pip-toggle-header" title="${this.pipSupported ? 'Picture-in-Picture (stays on top of other tabs)' : 'Mini Player'}">
+                    <svg class="pip-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="3" width="20" height="14" rx="2"/>
+                        <rect x="12" y="10" width="8" height="6" rx="1" fill="currentColor" opacity="0.3"/>
+                    </svg>
+                    <span>PiP Player</span>
+                </div>
             `;
-            toggleBtn.onclick = (e) => {
-                e.preventDefault();
+            pipSection.querySelector('.pip-toggle-header').onclick = () => {
                 if (this.pipSupported) {
                     this.openPiP();
                 } else {
                     this.toggle();
                 }
             };
-            sidebar.appendChild(toggleBtn);
+            // Insert after sleep timer
+            sleepTimer.parentNode.insertBefore(pipSection, sleepTimer.nextSibling);
         }
     },
     
@@ -315,13 +316,23 @@ const MiniPlayer = {
                 this.pipWindow.document.head.appendChild(style.cloneNode(true));
             });
             
-            // Add custom PiP styles
+            // Get current theme colors
+            const currentTheme = localStorage.getItem('retroplay-theme') || 'synthwave';
+            const theme = (typeof THEMES !== 'undefined' && THEMES[currentTheme]) || {
+                primary: '#EC4899',
+                secondary: '#8B5CF6',
+                bgDark: '#0a0e27',
+                bgMid: '#1a1f3a',
+                bgLight: '#2a2f4a'
+            };
+            
+            // Add custom PiP styles with theme colors
             const pipStyle = this.pipWindow.document.createElement('style');
             pipStyle.textContent = `
                 body {
                     margin: 0;
                     padding: 12px;
-                    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+                    background: linear-gradient(135deg, ${theme.bgDark} 0%, ${theme.bgMid} 100%);
                     font-family: 'Inter', sans-serif;
                     color: white;
                     overflow: hidden;
@@ -335,12 +346,12 @@ const MiniPlayer = {
                 .pip-vinyl {
                     width: 80px;
                     height: 80px;
-                    background: conic-gradient(from 0deg, #1a1a2e, #2d2d44, #1a1a2e);
+                    background: conic-gradient(from 0deg, ${theme.bgMid}, ${theme.bgLight}, ${theme.bgMid});
                     border-radius: 50%;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    box-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
+                    box-shadow: 0 0 20px ${theme.primary}40;
                     flex-shrink: 0;
                 }
                 .pip-vinyl.spinning {
@@ -353,7 +364,7 @@ const MiniPlayer = {
                 .pip-vinyl-inner {
                     width: 30px;
                     height: 30px;
-                    background: linear-gradient(135deg, #EC4899, #8B5CF6);
+                    background: linear-gradient(135deg, ${theme.primary}, ${theme.secondary});
                     border-radius: 50%;
                     border: 3px solid rgba(255,255,255,0.2);
                 }
@@ -387,7 +398,7 @@ const MiniPlayer = {
                 }
                 .pip-progress-fill {
                     height: 100%;
-                    background: linear-gradient(90deg, #EC4899, #8B5CF6);
+                    background: linear-gradient(90deg, ${theme.primary}, ${theme.secondary});
                     width: 0%;
                     transition: width 0.1s linear;
                 }
@@ -419,7 +430,7 @@ const MiniPlayer = {
                     transition: all 0.2s;
                 }
                 .pip-btn:hover {
-                    background: rgba(236, 72, 153, 0.3);
+                    background: ${theme.primary}50;
                     transform: scale(1.1);
                 }
                 .pip-btn svg {
@@ -429,11 +440,57 @@ const MiniPlayer = {
                 .pip-btn.play-btn {
                     width: 44px;
                     height: 44px;
-                    background: linear-gradient(135deg, #EC4899, #8B5CF6);
-                    box-shadow: 0 0 20px rgba(236, 72, 153, 0.4);
+                    background: linear-gradient(135deg, ${theme.primary}, ${theme.secondary});
+                    box-shadow: 0 0 20px ${theme.primary}66;
                 }
                 .pip-btn.play-btn:hover {
-                    box-shadow: 0 0 30px rgba(236, 72, 153, 0.6);
+                    box-shadow: 0 0 30px ${theme.primary}99;
+                }
+                .pip-volume {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-top: 10px;
+                    padding-top: 10px;
+                    border-top: 1px solid rgba(255,255,255,0.1);
+                }
+                .pip-volume svg {
+                    width: 16px;
+                    height: 16px;
+                    color: #a0aec0;
+                    flex-shrink: 0;
+                }
+                .pip-volume-slider {
+                    flex: 1;
+                    height: 4px;
+                    -webkit-appearance: none;
+                    appearance: none;
+                    background: rgba(255,255,255,0.1);
+                    border-radius: 2px;
+                    outline: none;
+                }
+                .pip-volume-slider::-webkit-slider-thumb {
+                    -webkit-appearance: none;
+                    appearance: none;
+                    width: 12px;
+                    height: 12px;
+                    background: linear-gradient(135deg, ${theme.primary}, ${theme.secondary});
+                    border-radius: 50%;
+                    cursor: pointer;
+                }
+                .pip-volume-slider::-moz-range-thumb {
+                    width: 12px;
+                    height: 12px;
+                    background: linear-gradient(135deg, ${theme.primary}, ${theme.secondary});
+                    border-radius: 50%;
+                    cursor: pointer;
+                    border: none;
+                }
+                .pip-volume-value {
+                    font-size: 11px;
+                    color: #a0aec0;
+                    min-width: 30px;
+                    text-align: right;
                 }
             `;
             this.pipWindow.document.head.appendChild(pipStyle);
@@ -466,6 +523,14 @@ const MiniPlayer = {
                         <button class="pip-btn" id="pip-next">
                             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
                         </button>
+                    </div>
+                    <div class="pip-volume">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                        </svg>
+                        <input type="range" class="pip-volume-slider" id="pip-volume" min="0" max="100" value="100">
+                        <span class="pip-volume-value" id="pip-volume-value">100%</span>
                     </div>
                 </div>
             `;
@@ -510,8 +575,24 @@ const MiniPlayer = {
             }
         };
         
-        // Setup audio sync for PiP
+        // Volume slider
         const audio = document.getElementById('audio-player');
+        const volumeSlider = doc.getElementById('pip-volume');
+        const volumeValue = doc.getElementById('pip-volume-value');
+        
+        if (volumeSlider && audio) {
+            // Set initial volume
+            volumeSlider.value = Math.round(audio.volume * 100);
+            volumeValue.textContent = `${Math.round(audio.volume * 100)}%`;
+            
+            volumeSlider.oninput = () => {
+                const vol = volumeSlider.value / 100;
+                audio.volume = vol;
+                volumeValue.textContent = `${volumeSlider.value}%`;
+            };
+        }
+        
+        // Setup audio sync for PiP
         if (audio) {
             const updatePiPProgress = () => {
                 if (!this.pipWindow || this.pipWindow.closed) return;
@@ -546,8 +627,18 @@ const MiniPlayer = {
             audio.addEventListener('play', updatePiPPlayState);
             audio.addEventListener('pause', updatePiPPlayState);
             
+            // Watch for song changes via loadeddata event
+            audio.addEventListener('loadeddata', () => this.updatePiP());
+            
             // Initial state
             updatePiPPlayState();
+        }
+        
+        // Also watch for vinyl panel title changes using MutationObserver
+        const vinylTitle = document.querySelector('.vinyl-song-title');
+        if (vinylTitle) {
+            const observer = new MutationObserver(() => this.updatePiP());
+            observer.observe(vinylTitle, { childList: true, characterData: true, subtree: true });
         }
     },
     
@@ -555,7 +646,19 @@ const MiniPlayer = {
         if (!this.pipWindow || this.pipWindow.closed) return;
         
         const doc = this.pipWindow.document;
-        const song = window.currentSong;
+        let song = window.currentSong;
+        
+        // Fallback: get song info from vinyl panel if currentSong not set
+        if (!song || !song.title) {
+            const vinylTitle = document.querySelector('.vinyl-song-title');
+            const vinylArtist = document.querySelector('.vinyl-song-artist');
+            if (vinylTitle) {
+                song = {
+                    title: vinylTitle.textContent || 'No song playing',
+                    artist: vinylArtist?.textContent || '-'
+                };
+            }
+        }
         
         const title = doc.getElementById('pip-title');
         const artist = doc.getElementById('pip-artist');

@@ -1258,13 +1258,57 @@ input:focus, select:focus, textarea:focus {
     color: var(--secondary);
 }
 
-.mini-player-nav-btn {
-    margin-top: auto !important;
+/* ========== SIDEBAR PIP PLAYER SECTION ========== */
+.sidebar-pip-player {
+    padding: 0.75rem 1rem;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 1rem !important;
 }
 
-.mini-player-nav-btn svg rect:last-child {
-    fill: var(--primary);
+.pip-toggle-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.pip-toggle-header:hover {
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--text-primary);
+}
+
+.pip-toggle-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.pip-toggle-icon rect:last-child {
+    fill: var(--secondary);
     opacity: 0.5;
+}
+
+
+/* ========== ELECTRON DESKTOP APP STYLES ========== */
+.electron-app .desktop-badge {
+    display: inline-block;
+    font-size: 9px;
+    padding: 2px 6px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 4px;
+    margin-left: 8px;
+    vertical-align: middle;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Hide PiP button in Electron (not needed - has native controls) */
+.electron-app #pip-player-btn,
+.electron-app #sidebar-pip-toggle {
+    display: none !important;
 }

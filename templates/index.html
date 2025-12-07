@@ -324,12 +324,12 @@
                 <div class="tab-content" id="profile-tab">
                     <div class="content-header">
                         <h1>Your Profile</h1>
-                        <button class="btn-primary" onclick="showProfileModal()">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <button class="btn-create" onclick="showProfileModal()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke-width="2"/>
                                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke-width="2"/>
                             </svg>
-                            Edit Profile
+                            Edit
                         </button>
                     </div>
                     
@@ -1460,5 +1460,7 @@
     <script src="{{ url_for('static', filename='js/enhanced-visualizer.js') }}"></script>
     <script src="{{ url_for('static', filename='js/podcast-radio.js') }}"></script>
     <script src="{{ url_for('static', filename='js/mini-player-themes.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chromecast.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/electron-bridge.js') }}"></script>
 </body>
 </html>
