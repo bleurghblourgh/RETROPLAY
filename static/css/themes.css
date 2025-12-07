@@ -1,0 +1,339 @@
+/* RETROPLAY - Retro 90s Themes */
+
+/* Theme Variables */
+:root {
+    /* Default: Synthwave */
+    --primary: #EC4899;
+    --secondary: #8B5CF6;
+    --accent: #00F5FF;
+    --bg-dark: #0A0E27;
+    --bg-mid: #1A1F3A;
+    --bg-light: #2A2F4A;
+    --text-primary: #FFFFFF;
+    --text-secondary: #A0AEC0;
+    --border: rgba(139, 92, 246, 0.2);
+    --shadow: rgba(236, 72, 153, 0.3);
+    --logo-gradient: linear-gradient(135deg, #EC4899 0%, #8B5CF6 100%);
+    --glow-color: #EC4899;
+}
+
+/* Theme: Synthwave (Default) */
+[data-theme="synthwave"] {
+    --primary: #EC4899;
+    --secondary: #8B5CF6;
+    --accent: #00F5FF;
+    --bg-dark: #0A0E27;
+    --bg-mid: #1A1F3A;
+    --bg-light: #2A2F4A;
+    --text-primary: #FFFFFF;
+    --text-secondary: #A0AEC0;
+    --border: rgba(139, 92, 246, 0.2);
+    --shadow: rgba(236, 72, 153, 0.3);
+    --logo-gradient: linear-gradient(135deg, #EC4899 0%, #8B5CF6 100%);
+    --glow-color: #EC4899;
+}
+
+/* Theme: Neon Nights */
+[data-theme="neon"] {
+    --primary: #00FF88;
+    --secondary: #FF00FF;
+    --accent: #FFFF00;
+    --bg-dark: #0D0D0D;
+    --bg-mid: #1A1A1A;
+    --bg-light: #2D2D2D;
+    --text-primary: #FFFFFF;
+    --text-secondary: #888888;
+    --border: rgba(0, 255, 136, 0.2);
+    --shadow: rgba(0, 255, 136, 0.3);
+    --logo-gradient: linear-gradient(135deg, #00FF88 0%, #FF00FF 100%);
+    --glow-color: #00FF88;
+}
+
+/* Theme: Vaporwave */
+[data-theme="vaporwave"] {
+    --primary: #FF71CE;
+    --secondary: #01CDFE;
+    --accent: #05FFA1;
+    --bg-dark: #1A0A2E;
+    --bg-mid: #2D1B4E;
+    --bg-light: #3D2B5E;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B794F4;
+    --border: rgba(255, 113, 206, 0.2);
+    --shadow: rgba(255, 113, 206, 0.3);
+    --logo-gradient: linear-gradient(135deg, #FF71CE 0%, #01CDFE 100%);
+    --glow-color: #FF71CE;
+}
+
+/* Theme: Retro Arcade */
+[data-theme="arcade"] {
+    --primary: #FFD700;
+    --secondary: #FF4500;
+    --accent: #00CED1;
+    --bg-dark: #1A0000;
+    --bg-mid: #2D1010;
+    --bg-light: #3D2020;
+    --text-primary: #FFFFFF;
+    --text-secondary: #FFB347;
+    --border: rgba(255, 215, 0, 0.2);
+    --shadow: rgba(255, 215, 0, 0.3);
+    --logo-gradient: linear-gradient(135deg, #FFD700 0%, #FF4500 100%);
+    --glow-color: #FFD700;
+}
+
+/* Theme: Cyberpunk */
+[data-theme="cyberpunk"] {
+    --primary: #F9E900;
+    --secondary: #FF003C;
+    --accent: #00D4FF;
+    --bg-dark: #0D0221;
+    --bg-mid: #1A0A3E;
+    --bg-light: #2A1A4E;
+    --text-primary: #FFFFFF;
+    --text-secondary: #9D8DF1;
+    --border: rgba(249, 233, 0, 0.2);
+    --shadow: rgba(249, 233, 0, 0.3);
+    --logo-gradient: linear-gradient(135deg, #F9E900 0%, #FF003C 100%);
+    --glow-color: #F9E900;
+}
+
+/* Theme: Miami Vice */
+[data-theme="miami"] {
+    --primary: #FF6B9D;
+    --secondary: #00D4AA;
+    --accent: #FFE66D;
+    --bg-dark: #0A1628;
+    --bg-mid: #162447;
+    --bg-light: #1F4068;
+    --text-primary: #FFFFFF;
+    --text-secondary: #7EC8E3;
+    --border: rgba(255, 107, 157, 0.2);
+    --shadow: rgba(255, 107, 157, 0.3);
+    --logo-gradient: linear-gradient(135deg, #FF6B9D 0%, #00D4AA 100%);
+    --glow-color: #FF6B9D;
+}
+
+/* Theme: Retro Green (Classic Terminal) */
+[data-theme="terminal"] {
+    --primary: #00FF00;
+    --secondary: #00CC00;
+    --accent: #33FF33;
+    --bg-dark: #000000;
+    --bg-mid: #0A0A0A;
+    --bg-light: #1A1A1A;
+    --text-primary: #00FF00;
+    --text-secondary: #00AA00;
+    --border: rgba(0, 255, 0, 0.2);
+    --shadow: rgba(0, 255, 0, 0.3);
+    --logo-gradient: linear-gradient(135deg, #00FF00 0%, #00CC00 100%);
+    --glow-color: #00FF00;
+}
+
+/* Theme: Sunset */
+[data-theme="sunset"] {
+    --primary: #FF6B35;
+    --secondary: #F7931E;
+    --accent: #FFD23F;
+    --bg-dark: #1A0A0A;
+    --bg-mid: #2D1515;
+    --bg-light: #3D2525;
+    --text-primary: #FFFFFF;
+    --text-secondary: #FFB088;
+    --border: rgba(255, 107, 53, 0.2);
+    --shadow: rgba(255, 107, 53, 0.3);
+    --logo-gradient: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+    --glow-color: #FF6B35;
+}
+
+/* Dynamic Logo Styling */
+.logo-icon,
+.logo-icon-small {
+    background: var(--logo-gradient) !important;
+    box-shadow: 0 0 30px var(--glow-color), 0 10px 40px var(--shadow);
+    transition: all 0.5s ease;
+}
+
+.logo-text {
+    background: var(--logo-gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    transition: all 0.5s ease;
+}
+
+/* Retro 90s Styling */
+.retro-border {
+    border: 3px solid var(--primary);
+    box-shadow: 
+        0 0 10px var(--glow-color),
+        inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.retro-glow {
+    text-shadow: 
+        0 0 10px var(--glow-color),
+        0 0 20px var(--glow-color),
+        0 0 30px var(--glow-color);
+}
+
+/* Scanline Effect */
+.scanlines::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1) 0px,
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 1000;
+}
+
+/* CRT Effect */
+.crt-effect {
+    animation: crt-flicker 0.15s infinite;
+}
+
+@keyframes crt-flicker {
+    0% { opacity: 0.97; }
+    50% { opacity: 1; }
+    100% { opacity: 0.98; }
+}
+
+/* Pixelated Font Option */
+.pixel-font {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    letter-spacing: 1px;
+}
+
+/* Theme Selector Styling */
+.theme-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+.theme-card {
+    position: relative;
+    padding: 1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid var(--border);
+    background: var(--bg-dark);
+    overflow: hidden;
+    /* Button reset styles */
+    font-family: inherit;
+    font-size: inherit;
+    text-align: left;
+    width: 100%;
+    display: block;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.theme-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+}
+
+.theme-card[data-theme="synthwave"]::before,
+.theme-card[data-theme-preview="synthwave"]::before {
+    background: linear-gradient(90deg, #EC4899, #8B5CF6);
+}
+
+.theme-card[data-theme="neon"]::before,
+.theme-card[data-theme-preview="neon"]::before {
+    background: linear-gradient(90deg, #00FF88, #FF00FF);
+}
+
+.theme-card[data-theme="vaporwave"]::before,
+.theme-card[data-theme-preview="vaporwave"]::before {
+    background: linear-gradient(90deg, #FF71CE, #01CDFE);
+}
+
+.theme-card[data-theme="arcade"]::before,
+.theme-card[data-theme-preview="arcade"]::before {
+    background: linear-gradient(90deg, #FFD700, #FF4500);
+}
+
+.theme-card[data-theme="cyberpunk"]::before,
+.theme-card[data-theme-preview="cyberpunk"]::before {
+    background: linear-gradient(90deg, #F9E900, #FF003C);
+}
+
+.theme-card[data-theme="miami"]::before,
+.theme-card[data-theme-preview="miami"]::before {
+    background: linear-gradient(90deg, #FF6B9D, #00D4AA);
+}
+
+.theme-card[data-theme="terminal"]::before,
+.theme-card[data-theme-preview="terminal"]::before {
+    background: linear-gradient(90deg, #00FF00, #00CC00);
+}
+
+.theme-card[data-theme="sunset"]::before,
+.theme-card[data-theme-preview="sunset"]::before {
+    background: linear-gradient(90deg, #FF6B35, #F7931E);
+}
+
+.theme-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+    box-shadow: 0 8px 24px var(--shadow);
+}
+
+.theme-card.active {
+    border-color: var(--primary);
+    box-shadow: 0 0 20px var(--glow-color);
+}
+
+.theme-card.active::after {
+    content: '✓';
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 24px;
+    height: 24px;
+    background: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: white;
+}
+
+.theme-preview {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 0.75rem;
+}
+
+.theme-color {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.theme-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.theme-description {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}

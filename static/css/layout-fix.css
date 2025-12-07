@@ -1,0 +1,128 @@
+/* RETROPLAY - Complete Layout Fix */
+
+/* Reset and Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+}
+
+/* Screen Container */
+.screen {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+/* Main App - 3 Column Layout */
+#main-app {
+    display: grid;
+    grid-template-columns: 280px 1fr 380px;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+    background: var(--bg-mid);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+/* Main Content */
+.main-content {
+    background: var(--bg-dark);
+    overflow-y: auto;
+    height: 100vh;
+    padding: 2rem;
+}
+
+/* Vinyl Panel Right */
+.vinyl-panel-right {
+    background: var(--bg-mid);
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+/* Responsive Breakpoints */
+
+/* Large Tablets and Small Desktops (< 1400px) */
+@media (max-width: 1400px) {
+    #main-app {
+        grid-template-columns: 260px 1fr 320px;
+    }
+    
+    .vinyl-panel-right {
+        padding: 1.5rem;
+    }
+}
+
+/* Tablets (< 1024px) */
+@media (max-width: 1024px) {
+    #main-app {
+        grid-template-columns: 240px 1fr;
+    }
+    
+    .vinyl-panel-right {
+        display: none;
+    }
+}
+
+/* Mobile (< 768px) */
+@media (max-width: 768px) {
+    #main-app {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar {
+        display: none;
+    }
+    
+    .vinyl-panel-right {
+        display: none;
+    }
+    
+    .main-content {
+        padding: 1rem;
+    }
+}
+
+/* Ensure content doesn't overflow */
+.tab-content {
+    width: 100%;
+    max-width: 100%;
+}
+
+.content-header {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Fix any absolute positioning issues */
+.loading-screen,
+.login-container {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}

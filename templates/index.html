@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RETROPLAY - Modern Music Player</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/themes.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/retro-ui.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login-enhanced.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vinyl-panel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout-revert.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -26,35 +31,97 @@
         <!-- Login Screen -->
         <div id="login-screen" class="screen" style="display: none;">
             <div class="login-container">
+                <!-- Animated Background -->
+                <div class="login-bg-animation">
+                    <div class="grid-lines"></div>
+                    <div class="floating-shapes">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-2"></div>
+                        <div class="shape shape-3"></div>
+                        <div class="shape shape-4"></div>
+                    </div>
+                    <div class="scan-line"></div>
+                </div>
+                
                 <div class="login-card">
                     <div class="logo-container">
-                        <div class="logo-icon">R</div>
-                        <div class="logo-text">RETROPLAY</div>
+                        <div class="logo-icon">
+                            <div class="logo-glow"></div>
+                            R
+                        </div>
+                        <div class="logo-text">
+                            RETROPLAY
+                            <span class="glitch-overlay" data-text="RETROPLAY" aria-hidden="true">RETROPLAY</span>
+                        </div>
                     </div>
                     
-                    <h2 id="auth-title">Welcome Back</h2>
+                    <p class="login-tagline">Your Music, Reimagined</p>
+                    
+                    <h2 id="auth-title" class="neon-text">Welcome Back</h2>
                     
                     <form id="auth-form">
                         <div class="input-group">
+                            <div class="input-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-width="2"/>
+                                    <circle cx="12" cy="7" r="4" stroke-width="2"/>
+                                </svg>
+                            </div>
                             <input type="text" id="username" placeholder="Username" required>
                         </div>
                         
                         <div class="input-group" id="email-group" style="display: none;">
+                            <div class="input-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-width="2"/>
+                                    <polyline points="22,6 12,13 2,6" stroke-width="2"/>
+                                </svg>
+                            </div>
                             <input type="email" id="email" placeholder="Email">
                         </div>
                         
                         <div class="input-group">
+                            <div class="input-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke-width="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke-width="2"/>
+                                </svg>
+                            </div>
                             <input type="password" id="password" placeholder="Password" required>
                         </div>
                         
                         <div id="auth-message" class="auth-message"></div>
                         
-                        <button type="submit" class="btn-primary" id="auth-submit">Login</button>
+                        <button type="submit" class="btn-primary btn-glow" id="auth-submit">
+                            <span>Login</span>
+                            <div class="btn-shine"></div>
+                        </button>
                     </form>
                     
                     <div class="auth-switch">
                         <span id="switch-text">Don't have an account?</span>
-                        <button id="switch-mode" class="btn-link">Register</button>
+                        <button id="switch-mode" class="btn-link neon-link">Register</button>
+                    </div>
+                    
+                    <div class="login-features">
+                        <div class="feature-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M9 18V5l12-2v13" stroke-width="2"/>
+                            </svg>
+                            <span>Smart Library</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z" stroke-width="2"/>
+                            </svg>
+                            <span>AI Analysis</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            </svg>
+                            <span>Retro Vibes</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -101,6 +168,22 @@
                         <span>Upload</span>
                     </button>
                     
+                    <button class="nav-item" data-tab="ai-chat">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-width="2"/>
+                            <path d="M9 10h.01M15 10h.01M9.5 14a3.5 3.5 0 0 0 5 0" stroke-width="2"/>
+                        </svg>
+                        <span>AI Assistant</span>
+                    </button>
+                    
+                    <button class="nav-item" data-tab="profile">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-width="2"/>
+                            <circle cx="12" cy="7" r="4" stroke-width="2"/>
+                        </svg>
+                        <span>Profile</span>
+                    </button>
+                    
                     <button class="nav-item" data-tab="settings">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <circle cx="12" cy="12" r="3" stroke-width="2"/>
@@ -111,11 +194,11 @@
                 </nav>
                 
                 <div class="sidebar-footer">
-                    <div class="user-info">
-                        <div class="user-avatar">U</div>
+                    <div class="user-info" onclick="showProfileModal()" style="cursor: pointer;" title="View Profile">
+                        <div class="user-avatar" id="sidebar-avatar">U</div>
                         <div class="user-details">
                             <div class="user-name" id="sidebar-username">User</div>
-                            <button id="logout-btn" class="btn-link-small">Logout</button>
+                            <button id="logout-btn" class="btn-link-small" onclick="event.stopPropagation(); logout();">Logout</button>
                         </div>
                     </div>
                 </div>
@@ -129,6 +212,9 @@
                         <h1>Your Library</h1>
                         <div class="header-actions">
                             <input type="text" class="search-input" placeholder="Search songs...">
+                            <button type="button" class="btn-secondary" id="remove-duplicates-btn" title="Remove duplicate songs">
+                                🗑️ Remove Duplicates
+                            </button>
                         </div>
                     </div>
                     
@@ -148,12 +234,12 @@
                 <div class="tab-content" id="playlists-tab">
                     <div class="content-header">
                         <h1>Playlists</h1>
-                        <button class="btn-primary" id="create-playlist-btn">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <button class="btn-create" id="create-playlist-btn" onclick="showCreatePlaylistModal()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <line x1="12" y1="5" x2="12" y2="19" stroke-width="2"/>
                                 <line x1="5" y1="12" x2="19" y2="12" stroke-width="2"/>
                             </svg>
-                            Create Playlist
+                            New
                         </button>
                     </div>
                     
@@ -190,58 +276,403 @@
                 <div class="tab-content" id="upload-tab">
                     <div class="content-header">
                         <h1>Upload Music</h1>
+                        <div class="upload-stats">
+                            <div class="stat-item">
+                                <span class="stat-value" id="total-songs">0</span>
+                                <span class="stat-label">Songs</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="total-artists">0</span>
+                                <span class="stat-label">Artists</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="total-albums">0</span>
+                                <span class="stat-label">Albums</span>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="upload-container">
                         <div class="drop-zone" id="drop-zone">
-                            <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <h3>Drop your music here</h3>
-                            <p>or click to browse</p>
-                            <p class="supported-formats">Supports: MP3, WAV, OGG, FLAC, M4A</p>
-                            <input type="file" id="file-input" accept="audio/*" multiple hidden>
+                            <div class="drop-zone-inner">
+                                <div class="upload-icon-container">
+                                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <div class="upload-pulse"></div>
+                                </div>
+                                <h3 class="drop-title">Drop your music here</h3>
+                                <p class="drop-subtitle">or click to browse files</p>
+                                <div class="supported-formats">
+                                    <span class="format-badge">MP3</span>
+                                    <span class="format-badge">WAV</span>
+                                    <span class="format-badge">OGG</span>
+                                    <span class="format-badge">FLAC</span>
+                                    <span class="format-badge">M4A</span>
+                                </div>
+                                <input type="file" id="file-input" accept="audio/*" multiple hidden>
+                            </div>
                         </div>
                         
                         <div class="upload-queue" id="upload-queue" style="display: none;">
-                            <h3>Upload Queue</h3>
-                            <div id="upload-items"></div>
+                            <div class="upload-queue-header">
+                                <h3>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-width="2"/>
+                                    </svg>
+                                    Processing Uploads
+                                </h3>
+                                <span class="upload-count" id="upload-count">0 files</span>
+                            </div>
+                            <div id="upload-items" class="upload-items-list"></div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Profile Tab -->
+                <div class="tab-content" id="profile-tab">
+                    <div class="content-header">
+                        <h1>Your Profile</h1>
+                        <button class="btn-primary" onclick="showProfileModal()">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke-width="2"/>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke-width="2"/>
+                            </svg>
+                            Edit Profile
+                        </button>
+                    </div>
+                    
+                    <div class="profile-tab-container">
+                        <!-- Profile Header -->
+                        <div class="profile-header-card">
+                            <div class="profile-avatar-display" id="profile-avatar-display">
+                                <div class="avatar-placeholder-large">U</div>
+                            </div>
+                            <div class="profile-header-info">
+                                <h2 id="profile-display-username">Username</h2>
+                                <p id="profile-display-email">email@example.com</p>
+                                <div class="profile-badges">
+                                    <span class="profile-badge" id="profile-public-badge" style="display: none;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-width="2"/>
+                                        </svg>
+                                        Public Profile
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Profile Stats -->
+                        <div class="profile-stats-grid">
+                            <div class="profile-stat-card">
+                                <div class="stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M9 18V5l12-2v13M9 13l12-2" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-value" id="profile-stat-songs">0</div>
+                                    <div class="stat-label">Songs</div>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-stat-card">
+                                <div class="stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M15 6v12a3 3 0 1 0 3-3H15zM9 18a3 3 0 1 0 3-3H9v3z" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-value" id="profile-stat-playlists">0</div>
+                                    <div class="stat-label">Playlists</div>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-stat-card">
+                                <div class="stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M8 5v14l11-7z" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-value" id="profile-stat-plays">0</div>
+                                    <div class="stat-label">Total Plays</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Profile Info -->
+                        <div class="profile-info-grid">
+                            <div class="profile-info-card">
+                                <h3>About</h3>
+                                <p id="profile-display-bio" class="profile-bio">No bio yet. Click "Edit Profile" to add one!</p>
+                            </div>
+                            
+                            <div class="profile-info-card">
+                                <h3>Favorite Genres</h3>
+                                <div id="profile-display-genres" class="profile-genres">
+                                    <span class="genre-tag">Not set</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Activity -->
+                        <div class="profile-activity-card">
+                            <h3>Recent Activity</h3>
+                            <div id="profile-recent-activity" class="activity-list">
+                                <div class="activity-empty">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                                        <polyline points="12 6 12 12 16 14" stroke-width="2"/>
+                                    </svg>
+                                    <p>No recent activity</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI Chat Tab -->
+                <div class="tab-content" id="ai-chat-tab">
+                    <div class="content-header">
+                        <h1>🤖 AI Music Assistant</h1>
+                        <p class="subtitle">Chat with AI to discover music, get recommendations, and analyze your library</p>
+                    </div>
+                    
+                    <div class="ai-chat-container">
+                        <div class="ai-chat-sidebar">
+                            <h3>Quick Actions</h3>
+                            <button class="ai-action-btn" onclick="aiQuickAction('recommend')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z" stroke-width="2"/>
+                                </svg>
+                                Get Recommendations
+                            </button>
+                            <button class="ai-action-btn" onclick="aiQuickAction('analyze')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                                </svg>
+                                Analyze Library
+                            </button>
+                            <button class="ai-action-btn" onclick="aiQuickAction('playlist')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M15 6v12a3 3 0 1 0 3-3H15z" stroke-width="2"/>
+                                </svg>
+                                Create Playlist
+                            </button>
+                            <button class="ai-action-btn" onclick="aiQuickAction('mood')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                                    <path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01" stroke-width="2"/>
+                                </svg>
+                                Mood Analysis
+                            </button>
+                            <button class="ai-action-btn" onclick="clearAIChat()" style="margin-top: 1rem; background: var(--bg-light);">
+                                🗑️ Clear Chat
+                            </button>
+                            
+                            <div class="ai-stats">
+                                <h4>Your Music Stats</h4>
+                                <div class="ai-stat-item">
+                                    <span>Total Songs:</span>
+                                    <strong id="ai-total-songs">0</strong>
+                                </div>
+                                <div class="ai-stat-item">
+                                    <span>Playlists:</span>
+                                    <strong id="ai-total-playlists">0</strong>
+                                </div>
+                                <div class="ai-stat-item">
+                                    <span>Top Genre:</span>
+                                    <strong id="ai-top-genre">-</strong>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="ai-chat-main">
+                            <div class="ai-chat-messages" id="ai-chat-messages">
+                                <div class="ai-message ai-message-assistant">
+                                    <div class="ai-message-avatar">🤖</div>
+                                    <div class="ai-message-content">
+                                        <p>Hey there! 🎵 I'm your RETROPLAY AI assistant. I can help you:</p>
+                                        <ul>
+                                            <li>Discover new music based on your taste</li>
+                                            <li>Analyze songs and describe their mood</li>
+                                            <li>Create personalized playlists</li>
+                                            <li>Get recommendations from your library</li>
+                                        </ul>
+                                        <p>What would you like to do today?</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="ai-chat-input-container">
+                                <input 
+                                    type="text" 
+                                    id="ai-chat-input" 
+                                    placeholder="Ask me anything about your music..." 
+                                    onkeypress="if(event.key==='Enter') sendAIMessage()"
+                                >
+                                <button class="btn-primary" onclick="sendAIMessage()">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <line x1="22" y1="2" x2="11" y2="13" stroke-width="2"/>
+                                        <polygon points="22 2 15 22 11 13 2 9 22 2" stroke-width="2"/>
+                                    </svg>
+                                    Send
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="ai-recommendations" id="ai-recommendations" style="display: none;">
+                            <h3>🎵 Recommended for You</h3>
+                            <div id="ai-recommended-songs" class="recommended-songs-list"></div>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Settings Tab -->
                 <div class="tab-content" id="settings-tab">
                     <div class="content-header">
                         <h1>Settings</h1>
                     </div>
                     
-                    <div class="settings-container">
-                        <div class="settings-section">
-                            <h3>Appearance</h3>
-                            <div class="setting-item">
-                                <label>Theme</label>
-                                <select id="theme-select" class="select-input">
-                                    <option value="synthwave">Synthwave</option>
-                                    <option value="tokyoNights">Tokyo Nights</option>
-                                    <option value="cyberpunkRed">Cyberpunk Red</option>
-                                    <option value="vaporwavePastels">Vaporwave Pastels</option>
-                                    <option value="matrixGreen">Matrix Green</option>
-                                </select>
+                    <!-- Settings Tabs -->
+                    <div class="settings-tabs">
+                        <button class="settings-tab-btn active" data-settings-tab="appearance">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <circle cx="12" cy="12" r="3" stroke-width="2"/>
+                                <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24" stroke-width="2"/>
+                            </svg>
+                            Appearance
+                        </button>
+                        <button class="settings-tab-btn" data-settings-tab="audio">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M11 5L6 9H2v6h4l5 4V5z" stroke-width="2"/>
+                            </svg>
+                            Audio
+                        </button>
+                        <button class="settings-tab-btn" data-settings-tab="account">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-width="2"/>
+                                <circle cx="12" cy="7" r="4" stroke-width="2"/>
+                            </svg>
+                            Account
+                        </button>
+                        <button class="settings-tab-btn" data-settings-tab="about">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                                <path d="M12 16v-4M12 8h.01" stroke-width="2"/>
+                            </svg>
+                            About
+                        </button>
+                    </div>
+                    
+                    <!-- Settings Content -->
+                    <div class="settings-content">
+                        <!-- Appearance Settings -->
+                        <div class="settings-panel active" id="appearance-settings">
+                            <div class="theme-section">
+                                <h3>🎨 Choose Your Theme</h3>
+                                <p class="theme-subtitle">Select a retro theme that matches your vibe</p>
+                                <div class="theme-selector" id="theme-selector">
+                                    <button type="button" class="theme-card active" data-theme="synthwave">
+                                        <div class="theme-preview">
+                                            <div class="theme-color" style="background:#EC4899"></div>
+                                            <div class="theme-color" style="background:#8B5CF6"></div>
+                                            <div class="theme-color" style="background:#00F5FF"></div>
+                                        </div>
+                                        <div class="theme-name">Synthwave</div>
+                                        <div class="theme-description">Neon pink & purple vibes</div>
+                                    </button>
+                                    <button type="button" class="theme-card" data-theme="neon">
+                                        <div class="theme-preview">
+                                            <div class="theme-color" style="background:#00FF88"></div>
+                                            <div class="theme-color" style="background:#FF00FF"></div>
+                                            <div class="theme-color" style="background:#FFFF00"></div>
+                                        </div>
+                                        <div class="theme-name">Neon Nights</div>
+                                        <div class="theme-description">Electric green & magenta</div>
+                                    </button>
+                                    <button type="button" class="theme-card" data-theme="vaporwave">
+                                        <div class="theme-preview">
+                                            <div class="theme-color" style="background:#FF71CE"></div>
+                                            <div class="theme-color" style="background:#01CDFE"></div>
+                                            <div class="theme-color" style="background:#05FFA1"></div>
+                                        </div>
+                                        <div class="theme-name">Vaporwave</div>
+                                        <div class="theme-description">Aesthetic pink & cyan</div>
+                                    </button>
+                                    <button type="button" class="theme-card" data-theme="arcade">
+                                        <div class="theme-preview">
+                                            <div class="theme-color" style="background:#FFD700"></div>
+                                            <div class="theme-color" style="background:#FF4500"></div>
+                                            <div class="theme-color" style="background:#00CED1"></div>
+                                        </div>
+                                        <div class="theme-name">Retro Arcade</div>
+                                        <div class="theme-description">Golden classics</div>
+                                    </button>
+                                    <button type="button" class="theme-card" data-theme="cyberpunk">
+                                        <div class="theme-preview">
+                                            <div class="theme-color" style="background:#F9E900"></div>
+                                            <div class="theme-color" style="background:#FF003C"></div>
+                                            <div class="theme-color" style="background:#00D4FF"></div>
+                                        </div>
+                                        <div class="theme-name">Cyberpunk</div>
+                                        <div class="theme-description">Yellow & red dystopia</div>
+                                    </button>
+                                    <button type="button" class="theme-card" data-theme="miami">
+                                        <div class="theme-preview">
+                                            <div class="theme-color" style="background:#FF6B9D"></div>
+                                            <div class="theme-color" style="background:#00D4AA"></div>
+                                            <div class="theme-color" style="background:#FFE66D"></div>
+                                        </div>
+                                        <div class="theme-name">Miami Vice</div>
+                                        <div class="theme-description">80s beach vibes</div>
+                                    </button>
+                                    <button type="button" class="theme-card" data-theme="terminal">
+                                        <div class="theme-preview">
+                                            <div class="theme-color" style="background:#00FF00"></div>
+                                            <div class="theme-color" style="background:#00CC00"></div>
+                                            <div class="theme-color" style="background:#33FF33"></div>
+                                        </div>
+                                        <div class="theme-name">Terminal</div>
+                                        <div class="theme-description">Classic green screen</div>
+                                    </button>
+                                    <button type="button" class="theme-card" data-theme="sunset">
+                                        <div class="theme-preview">
+                                            <div class="theme-color" style="background:#FF6B35"></div>
+                                            <div class="theme-color" style="background:#F7931E"></div>
+                                            <div class="theme-color" style="background:#FFD23F"></div>
+                                        </div>
+                                        <div class="theme-name">Sunset</div>
+                                        <div class="theme-description">Warm orange glow</div>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="setting-item" style="margin-top: 2rem;">
+                                <label>
+                                    <input type="checkbox" id="animations-toggle" checked>
+                                    Enable Animations
+                                </label>
                             </div>
                         </div>
                         
-                        <div class="settings-section">
-                            <h3>Audio</h3>
+                        <!-- Audio Settings -->
+                        <div class="settings-panel" id="audio-settings">
                             <div class="setting-item">
-                                <label>Volume</label>
-                                <input type="range" id="volume-slider" min="0" max="100" value="70" class="slider">
-                                <span id="volume-value">70%</span>
+                                <label>Crossfade Duration</label>
+                                <input type="range" id="crossfade-slider" min="0" max="10" value="0" class="slider">
+                                <span id="crossfade-value">0s</span>
+                            </div>
+                            <div class="setting-item">
+                                <label>
+                                    <input type="checkbox" id="gapless-toggle">
+                                    Gapless Playback
+                                </label>
                             </div>
                         </div>
                         
-                        <div class="settings-section">
-                            <h3>Account</h3>
+                        <!-- Account Settings -->
+                        <div class="settings-panel" id="account-settings">
                             <div class="setting-item">
                                 <label>Username</label>
                                 <p id="settings-username">-</p>
@@ -250,12 +681,155 @@
                                 <label>Email</label>
                                 <p id="settings-email">-</p>
                             </div>
+                            <button class="btn-primary" onclick="showProfileModal()">Edit Profile</button>
+                        </div>
+                        
+                        <!-- About Settings -->
+                        <div class="settings-panel" id="about-settings">
+                            <div class="about-info">
+                                <h2>RETROPLAY</h2>
+                                <p>Version 2.0.0</p>
+                                <p>Modern Music Player with Retro Vibes</p>
+                            </div>
+                            
+                            <div class="feedback-section">
+                                <h3>Send Feedback</h3>
+                                <form id="feedback-form">
+                                    <div class="input-group">
+                                        <label>Subject</label>
+                                        <input type="text" id="feedback-subject" placeholder="Bug report, feature request, etc." required>
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Message</label>
+                                        <textarea id="feedback-message" rows="5" placeholder="Tell us what you think..." required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn-primary btn-compact">Send Feedback</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </main>
 
-            <!-- Player Bar -->
+            <!-- Right Side Vinyl Panel -->
+            <aside class="vinyl-panel-right">
+                <!-- Now Playing Header -->
+                <div class="vinyl-header">
+                    <h3>Now Playing</h3>
+                    <div class="vinyl-header-actions">
+                        <button class="vinyl-header-btn" id="vinyl-fullscreen-btn" title="Fullscreen">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" stroke-width="2"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Vinyl Disc with Visualizer -->
+                <div class="vinyl-container">
+                    <div class="vinyl-disc-wrapper">
+                        <canvas id="vinyl-canvas"></canvas>
+                        <div class="vinyl-reflection"></div>
+                    </div>
+                    <div class="tonearm-container">
+                        <div class="tonearm" id="tonearm">
+                            <div class="tonearm-base"></div>
+                            <div class="tonearm-arm"></div>
+                            <div class="tonearm-head"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Song Info -->
+                <div class="vinyl-song-info">
+                    <div class="vinyl-song-title" id="vinyl-song-title">No song playing</div>
+                    <div class="vinyl-song-artist" id="vinyl-song-artist">Select a song to play</div>
+                    <div class="vinyl-song-album" id="vinyl-song-album"></div>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="vinyl-progress">
+                    <span class="vinyl-time" id="vinyl-time-current">0:00</span>
+                    <div class="vinyl-progress-bar" id="vinyl-progress-bar">
+                        <div class="vinyl-progress-fill" id="vinyl-progress-fill"></div>
+                        <div class="vinyl-progress-handle"></div>
+                    </div>
+                    <span class="vinyl-time" id="vinyl-time-total">0:00</span>
+                </div>
+                
+                <!-- Playback Controls -->
+                <div class="vinyl-controls">
+                    <button class="vinyl-control-btn" id="vinyl-shuffle-btn" title="Shuffle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    
+                    <button class="vinyl-control-btn" id="vinyl-prev-btn" title="Previous">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+                        </svg>
+                    </button>
+                    
+                    <button class="vinyl-control-btn vinyl-play-btn" id="vinyl-play-btn" title="Play">
+                        <svg id="vinyl-play-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </button>
+                    
+                    <button class="vinyl-control-btn" id="vinyl-next-btn" title="Next">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16 18h2V6h-2zM6 18l8.5-6L6 6z"/>
+                        </svg>
+                    </button>
+                    
+                    <button class="vinyl-control-btn" id="vinyl-repeat-btn" title="Repeat">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3" stroke-width="2"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Volume Control -->
+                <div class="vinyl-volume">
+                    <button class="vinyl-volume-btn" id="vinyl-mute-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <input type="range" class="vinyl-volume-slider" id="vinyl-volume" min="0" max="100" value="70">
+                </div>
+                
+                <!-- Audio Visualizer Bars -->
+                <div class="audio-visualizer" id="audio-visualizer">
+                    <div class="visualizer-bar"></div>
+                    <div class="visualizer-bar"></div>
+                    <div class="visualizer-bar"></div>
+                    <div class="visualizer-bar"></div>
+                    <div class="visualizer-bar"></div>
+                    <div class="visualizer-bar"></div>
+                    <div class="visualizer-bar"></div>
+                    <div class="visualizer-bar"></div>
+                    <div class="visualizer-bar"></div>
+                    <div class="visualizer-bar"></div>
+                    <div class="visualizer-bar"></div>
+                    <div class="visualizer-bar"></div>
+                    <div class="visualizer-bar"></div>
+                    <div class="visualizer-bar"></div>
+                    <div class="visualizer-bar"></div>
+                    <div class="visualizer-bar"></div>
+                </div>
+                
+                <!-- Queue Preview -->
+                <div class="vinyl-queue">
+                    <h4>Up Next</h4>
+                    <div class="queue-list" id="queue-list">
+                        <div class="queue-empty">Queue is empty</div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Player Bar (hidden, but kept for audio element) -->
             <div class="player-bar">
                 <div class="player-info">
                     <div class="player-artwork" id="player-artwork"></div>
@@ -269,7 +843,7 @@
                     <div class="player-controls">
                         <button class="control-btn" id="shuffle-btn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" stroke-width="2"/>
                             </svg>
                         </button>
                         
@@ -293,7 +867,7 @@
                         
                         <button class="control-btn" id="repeat-btn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3" stroke-width="2"/>
                             </svg>
                         </button>
                     </div>
@@ -310,7 +884,7 @@
                 
                 <div class="player-volume">
                     <svg class="volume-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke-width="2"/>
                     </svg>
                     <input type="range" class="volume-slider" id="player-volume" min="0" max="100" value="70">
                 </div>
@@ -319,9 +893,489 @@
             <!-- Hidden Audio Element -->
             <audio id="audio-player" preload="metadata"></audio>
         </div>
+        
+        <!-- Context Menu -->
+        <div id="context-menu" class="context-menu" style="display: none;">
+            <!-- Song-only options -->
+            <div class="context-menu-item song-only" data-action="add-to-playlist">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 5v14M5 12h14" stroke-width="2"/>
+                </svg>
+                <span>Add to Playlist</span>
+                <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M9 18l6-6-6-6" stroke-width="2"/>
+                </svg>
+            </div>
+            <div class="context-menu-item song-only" data-action="edit-artist">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-width="2"/>
+                    <circle cx="12" cy="7" r="4" stroke-width="2"/>
+                </svg>
+                <span>Edit Artist</span>
+            </div>
+            <div class="context-menu-item song-only" data-action="edit-image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5" stroke-width="2"/>
+                    <polyline points="21 15 16 10 5 21" stroke-width="2"/>
+                </svg>
+                <span>Change Image</span>
+            </div>
+            <!-- Playlist-only options -->
+            <div class="context-menu-item playlist-only" data-action="play-playlist">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <polygon points="5 3 19 12 5 21 5 3" stroke-width="2"/>
+                </svg>
+                <span>Play</span>
+            </div>
+            <div class="context-menu-item playlist-only" data-action="rename-playlist">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke-width="2"/>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke-width="2"/>
+                </svg>
+                <span>Rename</span>
+            </div>
+            <div class="context-menu-divider"></div>
+            <div class="context-menu-item" data-action="delete">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <polyline points="3 6 5 6 21 6" stroke-width="2"/>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-width="2"/>
+                </svg>
+                <span>Delete</span>
+            </div>
+        </div>
+        
+        <!-- Playlist Submenu -->
+        <div id="playlist-submenu" class="context-menu submenu" style="display: none;">
+            <div class="context-menu-item" data-action="new-playlist">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 5v14M5 12h14" stroke-width="2"/>
+                </svg>
+                <span>New Playlist</span>
+            </div>
+            <div class="context-menu-divider"></div>
+            <div id="playlist-list"></div>
+        </div>
     </div>
 
-    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <!-- INLINE SCRIPT - Playlists, Utilities -->
+    <script>
+    // NOTE: applyTheme is defined in core-functions.js which loads before this
+    
+    // ========== UTILITIES ==========
+    function escapeHtml(t){if(!t)return'';var d=document.createElement('div');d.textContent=t;return d.innerHTML;}
+    function formatDuration(s){if(!s)return'--:--';var m=Math.floor(s/60),sec=Math.floor(s%60);return m+':'+(sec<10?'0':'')+sec;}
+    function closeModal(){var m=document.querySelector('.modal-overlay');if(m)m.remove();}
+    function showNotification(msg,type){
+        var old=document.querySelector('.notification');if(old)old.remove();
+        var n=document.createElement('div');
+        n.className='notification notification-'+(type||'info');
+        
+        // Icon based on type
+        var icons = {success:'✓',error:'✕',warning:'⚠',info:'ℹ'};
+        var icon = icons[type] || icons.info;
+        
+        n.innerHTML = '<span class="notif-icon">' + icon + '</span><span class="notif-msg">' + msg + '</span>';
+        document.body.appendChild(n);
+        
+        // Animate in
+        setTimeout(function(){n.classList.add('show');},10);
+        
+        // Remove after 4 seconds
+        setTimeout(function(){
+            n.classList.remove('show');
+            setTimeout(function(){n.remove();},300);
+        },4000);
+    }
+    
+    // ========== PLAYLISTS ==========
+    function loadPlaylists(){
+        console.log('loadPlaylists called');
+        fetch('/api/playlists').then(function(r){return r.json();}).then(function(data){
+            if(data.success) displayPlaylists(data.playlists);
+        }).catch(function(e){console.error('loadPlaylists error:',e);});
+    }
+    
+    function displayPlaylists(list){
+        var g=document.getElementById('playlists-grid');if(!g)return;
+        if(!list||list.length===0){
+            g.innerHTML='<div class="empty-state"><h3>No playlists</h3><button class="btn-primary" onclick="showCreatePlaylistModal()">Create</button></div>';
+            return;
+        }
+        var h='';
+        var colors = ['#EC4899','#8B5CF6','#00FF88','#FFD700','#FF6B9D','#00D4FF','#FF6B35','#22c55e'];
+        for(var i=0;i<list.length;i++){
+            var p=list[i];
+            var color1 = colors[i % colors.length];
+            var color2 = colors[(i + 1) % colors.length];
+            h+='<div class="playlist-card-new" data-playlist-id="'+p.playlistId+'" oncontextmenu="showContextMenu(event, this, \'playlist\'); return false;">';
+            // Show cover image if exists, otherwise gradient
+            if(p.coverImage) {
+                h+='<div class="playlist-cover-art" style="background-image:url(\''+p.coverImage+'\');background-size:cover;background-position:center;">';
+            } else {
+                h+='<div class="playlist-cover-art" style="background:linear-gradient(135deg,'+color1+','+color2+');">';
+                h+='<div class="playlist-icon">🎵</div>';
+            }
+            h+='<div class="playlist-play-overlay"><button class="play-playlist-btn">▶</button></div>';
+            h+='</div>';
+            h+='<div class="playlist-info">';
+            h+='<div class="playlist-title">'+escapeHtml(p.playlistName)+'</div>';
+            h+='<div class="playlist-meta">'+(p.songCount||0)+' songs</div>';
+            h+='</div>';
+            h+='</div>';
+        }
+        g.innerHTML=h;
+    }
+    
+    function showPlaylistContextMenu(e, target) {
+        e.preventDefault();
+        e.stopPropagation();
+        var playlistId = target.getAttribute('data-playlist-id');
+        var menu = document.createElement('div');
+        menu.className = 'playlist-context-menu';
+        menu.innerHTML = 
+            '<div class="ctx-item" onclick="viewPlaylist('+playlistId+')">📂 Open</div>'+
+            '<div class="ctx-item" onclick="playPlaylist('+playlistId+')">▶️ Play</div>'+
+            '<div class="ctx-item" onclick="renamePlaylistPrompt('+playlistId+')">✏️ Rename</div>'+
+            '<div class="ctx-item ctx-danger" onclick="deletePlaylist('+playlistId+')">🗑️ Delete</div>';
+        menu.style.cssText = 'position:fixed;left:'+e.pageX+'px;top:'+e.pageY+'px;background:var(--bg-mid);border:2px solid var(--primary);border-radius:10px;padding:0.5rem 0;z-index:10000;min-width:150px;box-shadow:0 4px 20px rgba(0,0,0,0.4);';
+        document.body.appendChild(menu);
+        setTimeout(function(){
+            document.addEventListener('click', function closeMenu(){
+                menu.remove();
+                document.removeEventListener('click', closeMenu);
+            });
+        }, 10);
+    }
+    
+    function renamePlaylistPrompt(playlistId) {
+        var newName = prompt('Enter new playlist name:');
+        if (newName && newName.trim()) {
+            fetch('/api/playlists/'+playlistId, {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name: newName.trim()})
+            }).then(function(r){return r.json();}).then(function(data){
+                if(data.success) {
+                    showNotification('Playlist renamed!', 'success');
+                    loadPlaylists();
+                } else {
+                    showNotification(data.message || 'Failed to rename', 'error');
+                }
+            });
+        }
+    }
+    
+    function deletePlaylist(playlistId) {
+        showConfirm('Delete this playlist?', function() {
+            fetch('/api/playlists/'+playlistId, {method: 'DELETE'})
+            .then(function(r){return r.json();}).then(function(data){
+                if(data.success) {
+                    showNotification('Playlist deleted', 'success');
+                    loadPlaylists();
+                } else {
+                    showNotification(data.message || 'Failed to delete', 'error');
+                }
+            });
+        });
+    }
+    
+    function viewPlaylist(id){
+        fetch('/api/playlists/'+id+'/songs').then(function(r){return r.json();}).then(function(data){
+            if(data.success) showPlaylistModal(data.playlist,data.songs);
+        });
+    }
+    
+    function playPlaylist(id){
+        fetch('/api/playlists/'+id+'/songs').then(function(r){return r.json();}).then(function(data){
+            if(data.success&&data.songs&&data.songs.length>0){
+                window.currentQueue=data.songs;window.currentQueueIndex=0;
+                if(typeof window.playSong==='function')window.playSong(data.songs[0]);
+                showNotification('Playing playlist','success');
+            }
+        });
+    }
+    
+    var _modalSongs = [];
+    var _currentPlaylist = null;
+    
+    function showPlaylistModal(pl,songs){
+        closeModal();
+        _modalSongs = songs;
+        _currentPlaylist = pl;
+        
+        var totalDuration = songs.reduce(function(sum, s) { return sum + (s.duration || 0); }, 0);
+        var durationStr = Math.floor(totalDuration / 60) + ' min';
+        
+        var h='<div class="modal-overlay playlist-modal-overlay">';
+        h+='<div class="playlist-modal-large">';
+        
+        // Header with cover art
+        h+='<div class="pl-modal-header">';
+        h+='<div class="pl-cover" id="pl-cover-preview" onclick="changePlaylistImage('+pl.playlistId+')">';
+        if(pl.coverImage) {
+            h+='<img src="'+pl.coverImage+'" alt="Cover">';
+        } else {
+            h+='<div class="pl-cover-placeholder">🎵</div>';
+        }
+        h+='<div class="pl-cover-edit">📷 Change</div>';
+        h+='</div>';
+        h+='<div class="pl-header-info">';
+        h+='<span class="pl-type">PLAYLIST</span>';
+        h+='<h1 class="pl-title">'+escapeHtml(pl.playlistName)+'</h1>';
+        h+='<p class="pl-meta">'+songs.length+' songs • '+durationStr+'</p>';
+        h+='<div class="pl-header-actions">';
+        h+='<button class="pl-play-btn" onclick="playPlaylistSongs()">▶ Play</button>';
+        h+='<button class="pl-shuffle-btn" onclick="shufflePlaylistSongs()">🔀 Shuffle</button>';
+        h+='</div>';
+        h+='</div>';
+        h+='<button class="pl-close-btn" onclick="closeModal()">&times;</button>';
+        h+='</div>';
+        
+        // Tabs
+        h+='<div class="pl-tabs">';
+        h+='<button class="pl-tab active" onclick="switchPlaylistTab(\'songs\')">🎵 Songs</button>';
+        h+='<button class="pl-tab" onclick="switchPlaylistTab(\'settings\')">⚙️ Settings</button>';
+        h+='<button class="pl-tab" onclick="switchPlaylistTab(\'fun\')">🎉 Fun</button>';
+        h+='</div>';
+        
+        // Songs Tab
+        h+='<div class="pl-tab-content active" id="pl-tab-songs">';
+        if(songs.length===0){
+            h+='<div class="pl-empty">No songs yet. Add some from your library!</div>';
+        } else {
+            h+='<div class="pl-songs-list">';
+            for(var i=0;i<songs.length;i++){
+                var s=songs[i];
+                h+='<div class="pl-song-row" onclick="playSongFromModal('+i+')">';
+                h+='<span class="pl-song-num">'+(i+1)+'</span>';
+                h+='<div class="pl-song-info">';
+                h+='<div class="pl-song-title">'+escapeHtml(s.title||'Unknown')+'</div>';
+                h+='<div class="pl-song-artist">'+escapeHtml(s.artist||'Unknown Artist')+'</div>';
+                h+='</div>';
+                h+='<span class="pl-song-duration">'+formatDuration(s.duration)+'</span>';
+                h+='<button class="pl-song-remove" onclick="event.stopPropagation();removeSongFromPlaylist('+pl.playlistId+','+s.songId+')">✕</button>';
+                h+='</div>';
+            }
+            h+='</div>';
+        }
+        h+='</div>';
+        
+        // Settings Tab
+        h+='<div class="pl-tab-content" id="pl-tab-settings">';
+        h+='<div class="pl-settings-section">';
+        h+='<h3>📝 Playlist Info</h3>';
+        h+='<div class="pl-setting-item">';
+        h+='<label>Name</label>';
+        h+='<input type="text" id="pl-edit-name" value="'+escapeHtml(pl.playlistName)+'">';
+        h+='</div>';
+        h+='<div class="pl-setting-item">';
+        h+='<label>Description</label>';
+        h+='<textarea id="pl-edit-desc" rows="2" placeholder="Add a description...">'+(pl.description||'')+'</textarea>';
+        h+='</div>';
+        h+='<button class="pl-save-btn" onclick="savePlaylistSettings('+pl.playlistId+')">💾 Save Changes</button>';
+        h+='</div>';
+        h+='<div class="pl-settings-section">';
+        h+='<h3>🎨 Appearance</h3>';
+        h+='<button class="pl-setting-btn" onclick="changePlaylistImage('+pl.playlistId+')">📷 Change Cover Image</button>';
+        h+='</div>';
+        h+='<div class="pl-settings-section danger">';
+        h+='<h3>⚠️ Danger Zone</h3>';
+        h+='<button class="pl-danger-btn" onclick="deletePlaylist('+pl.playlistId+');closeModal();">🗑️ Delete Playlist</button>';
+        h+='</div>';
+        h+='</div>';
+        
+        // Fun Tab
+        h+='<div class="pl-tab-content" id="pl-tab-fun">';
+        h+='<div class="pl-fun-section">';
+        h+='<h3>🎲 Shuffle Modes</h3>';
+        h+='<div class="pl-fun-grid">';
+        h+='<button class="pl-fun-btn" onclick="shufflePlaylistSongs()">🔀 Random Shuffle</button>';
+        h+='<button class="pl-fun-btn" onclick="shuffleByArtist()">🎤 Group by Artist</button>';
+        h+='<button class="pl-fun-btn" onclick="playReverse()">⏪ Play Reverse</button>';
+        h+='<button class="pl-fun-btn" onclick="playRandom()">🎯 Random Song</button>';
+        h+='</div>';
+        h+='</div>';
+        h+='<div class="pl-fun-section">';
+        h+='<h3>📊 Playlist Stats</h3>';
+        h+='<div class="pl-stats-grid">';
+        h+='<div class="pl-stat"><span class="pl-stat-value">'+songs.length+'</span><span class="pl-stat-label">Songs</span></div>';
+        h+='<div class="pl-stat"><span class="pl-stat-value">'+durationStr+'</span><span class="pl-stat-label">Duration</span></div>';
+        var artists = {};songs.forEach(function(s){artists[s.artist||"Unknown"]=1;});
+        h+='<div class="pl-stat"><span class="pl-stat-value">'+Object.keys(artists).length+'</span><span class="pl-stat-label">Artists</span></div>';
+        h+='</div>';
+        h+='</div>';
+        h+='<div class="pl-fun-section">';
+        h+='<h3>🎮 Party Mode</h3>';
+        h+='<button class="pl-party-btn" onclick="startPartyMode()">🎉 Start Party Mode!</button>';
+        h+='<p class="pl-fun-desc">Shuffles songs and adds visual effects!</p>';
+        h+='</div>';
+        h+='</div>';
+        
+        h+='</div></div>';
+        var div=document.createElement('div');div.innerHTML=h;document.body.appendChild(div.firstChild);
+    }
+    
+    function switchPlaylistTab(tab) {
+        document.querySelectorAll('.pl-tab').forEach(function(t){t.classList.remove('active');});
+        document.querySelectorAll('.pl-tab-content').forEach(function(c){c.classList.remove('active');});
+        event.target.classList.add('active');
+        document.getElementById('pl-tab-'+tab).classList.add('active');
+    }
+    
+    function changePlaylistImage(playlistId) {
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = function(e) {
+            var file = e.target.files[0];
+            if (!file) return;
+            var formData = new FormData();
+            formData.append('image', file);
+            fetch('/api/playlists/'+playlistId+'/image', {method:'POST',body:formData})
+            .then(function(r){return r.json();})
+            .then(function(data){
+                if(data.success) {
+                    showNotification('Cover updated!','success');
+                    var preview = document.getElementById('pl-cover-preview');
+                    if(preview) preview.innerHTML = '<img src="'+data.imageUrl+'" alt="Cover"><div class="pl-cover-edit">📷 Change</div>';
+                    loadPlaylists();
+                }
+            });
+        };
+        input.click();
+    }
+    
+    function savePlaylistSettings(playlistId) {
+        var name = document.getElementById('pl-edit-name').value.trim();
+        var desc = document.getElementById('pl-edit-desc').value.trim();
+        if(!name) { showNotification('Name required','error'); return; }
+        fetch('/api/playlists/'+playlistId, {
+            method:'PUT',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({name:name,description:desc})
+        }).then(function(r){return r.json();}).then(function(data){
+            if(data.success) { showNotification('Saved!','success'); loadPlaylists(); }
+            else showNotification(data.message||'Failed','error');
+        });
+    }
+    
+    function removeSongFromPlaylist(playlistId, songId) {
+        fetch('/api/playlists/'+playlistId+'/songs/'+songId, {method:'DELETE'})
+        .then(function(r){return r.json();}).then(function(data){
+            if(data.success) { showNotification('Removed','success'); viewPlaylist(playlistId); }
+        });
+    }
+    
+    function shuffleByArtist() {
+        if(_modalSongs.length===0) return;
+        var byArtist = {};
+        _modalSongs.forEach(function(s){ var a=s.artist||'Unknown'; if(!byArtist[a])byArtist[a]=[]; byArtist[a].push(s); });
+        var shuffled = [];
+        Object.keys(byArtist).sort(function(){return Math.random()-0.5;}).forEach(function(a){ shuffled=shuffled.concat(byArtist[a]); });
+        window.currentQueue=shuffled;window.currentQueueIndex=0;
+        if(typeof window.playSong==='function')window.playSong(shuffled[0]);
+        showNotification('Playing grouped by artist','success');
+        closeModal();
+    }
+    
+    function playReverse() {
+        if(_modalSongs.length===0) return;
+        var reversed = _modalSongs.slice().reverse();
+        window.currentQueue=reversed;window.currentQueueIndex=0;
+        if(typeof window.playSong==='function')window.playSong(reversed[0]);
+        showNotification('Playing in reverse','success');
+        closeModal();
+    }
+    
+    function playRandom() {
+        if(_modalSongs.length===0) return;
+        var idx = Math.floor(Math.random()*_modalSongs.length);
+        window.currentQueue=_modalSongs;window.currentQueueIndex=idx;
+        if(typeof window.playSong==='function')window.playSong(_modalSongs[idx]);
+        showNotification('Random pick: '+_modalSongs[idx].title,'success');
+    }
+    
+    function startPartyMode() {
+        if(_modalSongs.length===0) return;
+        var shuffled = _modalSongs.slice().sort(function(){return Math.random()-0.5;});
+        window.currentQueue=shuffled;window.currentQueueIndex=0;
+        if(typeof window.playSong==='function')window.playSong(shuffled[0]);
+        document.body.classList.add('party-mode');
+        showNotification('🎉 Party Mode activated!','success');
+        closeModal();
+        setTimeout(function(){document.body.classList.remove('party-mode');},30000);
+    }
+    
+    function playPlaylistSongs(){if(_modalSongs.length>0){window.currentQueue=_modalSongs;window.currentQueueIndex=0;if(typeof window.playSong==='function')window.playSong(_modalSongs[0]);closeModal();}}
+    function shufflePlaylistSongs(){if(_modalSongs.length>0){var shuffled=_modalSongs.slice().sort(function(){return Math.random()-0.5;});window.currentQueue=shuffled;window.currentQueueIndex=0;if(typeof window.playSong==='function')window.playSong(shuffled[0]);closeModal();}}
+    function playSongFromModal(i){if(_modalSongs[i]){window.currentQueue=_modalSongs;window.currentQueueIndex=i;if(typeof window.playSong==='function')window.playSong(_modalSongs[i]);}}
+    
+    function showCreatePlaylistModal(){
+        closeModal();
+        var h='<div class="modal-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;z-index:10000;">';
+        h+='<div style="background:var(--bg-mid);border:2px solid var(--primary);border-radius:20px;padding:2rem;max-width:400px;width:90%;box-shadow:0 0 40px var(--shadow);">';
+        h+='<h2 style="margin:0 0 1.5rem;text-align:center;">Create Playlist</h2>';
+        h+='<input type="text" id="new-pl-name" placeholder="Playlist name" style="width:100%;padding:1rem;margin-bottom:1rem;background:var(--bg-dark);border:2px solid var(--border);border-radius:10px;color:white;font-size:16px;box-sizing:border-box;">';
+        h+='<div style="display:flex;gap:1rem;">';
+        h+='<button onclick="closeModal()" style="flex:1;padding:1rem;background:var(--bg-light);border:none;border-radius:10px;color:white;font-weight:600;cursor:pointer;">Cancel</button>';
+        h+='<button onclick="createPlaylist()" style="flex:1;padding:1rem;background:linear-gradient(135deg,var(--primary),var(--secondary));border:none;border-radius:10px;color:white;font-weight:600;cursor:pointer;">Create</button>';
+        h+='</div></div></div>';
+        var div=document.createElement('div');div.innerHTML=h;document.body.appendChild(div.firstChild);
+        setTimeout(function(){document.getElementById('new-pl-name').focus();},100);
+    }
+    
+    function createPlaylist(){
+        var name=document.getElementById('new-pl-name').value.trim();
+        if(!name){showNotification('Enter a name','error');return;}
+        fetch('/api/playlists',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,description:''})})
+        .then(function(r){return r.json();}).then(function(data){
+            if(data.success){showNotification('Created!','success');closeModal();loadPlaylists();}
+            else showNotification(data.message||'Failed','error');
+        }).catch(function(){showNotification('Error','error');});
+    }
+    
+    // ========== ALBUMS ==========
+    function loadAlbums(){
+        fetch('/api/library/albums').then(function(r){return r.json();}).then(function(data){
+            if(data.success) displayAlbums(data.albums);
+        }).catch(function(e){console.error('loadAlbums error:',e);});
+    }
+    
+    function displayAlbums(list){
+        var g=document.getElementById('albums-grid');if(!g)return;
+        if(!list||list.length===0){g.innerHTML='<div class="empty-state"><h3>No albums</h3></div>';return;}
+        var h='';
+        for(var i=0;i<list.length;i++){
+            var a=list[i];
+            h+='<div class="album-card" data-album="'+escapeHtml(a.album)+'" style="background:var(--bg-mid);border:2px solid var(--border);border-radius:16px;padding:1.5rem;cursor:pointer;">';
+            h+='<div style="font-weight:700;font-size:16px;">'+escapeHtml(a.album)+'</div>';
+            h+='<div style="font-size:13px;color:var(--text-secondary);">'+escapeHtml(a.artist||'Various')+'</div>';
+            h+='</div>';
+        }
+        g.innerHTML=h;
+    }
+    
+    // ========== EVENT DELEGATION ==========
+    document.addEventListener('click',function(e){
+        var ppb=e.target.closest('.play-playlist-btn');
+        if(ppb){e.preventDefault();e.stopPropagation();var pc=ppb.closest('[data-playlist-id]');if(pc){playPlaylist(parseInt(pc.getAttribute('data-playlist-id')));}return;}
+        
+        var plc=e.target.closest('[data-playlist-id]');
+        if(plc&&!e.target.closest('.play-playlist-btn')){e.preventDefault();viewPlaylist(parseInt(plc.getAttribute('data-playlist-id')));return;}
+    });
+    
+    // Theme click and init are handled by core-functions.js
+    console.log('INLINE SCRIPT LOADED');
+    </script>
+
+    <!-- Core Functions (must load first for themes) -->
+    <script src="{{ url_for('static', filename='js/core-functions.js') }}"></script>
+    <!-- Other Scripts -->
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/vinyl-visualizer.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/context-menu.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ai-chat.js') }}"></script>
 </body>
 </html>

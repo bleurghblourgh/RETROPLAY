@@ -9,7 +9,10 @@ CREATE TABLE IF NOT EXISTS users (
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     lastLogin TIMESTAMP,
     profilePicture TEXT,
-    themePreference TEXT DEFAULT 'synthwave'
+    bio TEXT,
+    favoriteGenres TEXT,
+    themePreference TEXT DEFAULT 'synthwave',
+    isPublic BOOLEAN DEFAULT 0
 );
 
 -- Songs table
@@ -20,6 +23,9 @@ CREATE TABLE IF NOT EXISTS songs (
     title TEXT,
     artist TEXT,
     album TEXT,
+    albumArtist TEXT,
+    discNumber INTEGER DEFAULT 1,
+    trackNumber INTEGER,
     genre TEXT,
     duration INTEGER,
     bpm INTEGER,
@@ -28,6 +34,22 @@ CREATE TABLE IF NOT EXISTS songs (
     lastPlayed TIMESTAMP,
     addedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     albumArt TEXT,
+    customArtist TEXT,
+    customImage TEXT,
+    FOREIGN KEY (userId) REFERENCES users(userId)
+);
+
+-- Albums table
+CREATE TABLE IF NOT EXISTS albums (
+    albumId INTEGER PRIMARY KEY AUTOINCREMENT,
+    userId INTEGER,
+    albumName TEXT NOT NULL,
+    albumArtist TEXT,
+    year INTEGER,
+    genre TEXT,
+    coverImage TEXT,
+    totalDiscs INTEGER DEFAULT 1,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (userId) REFERENCES users(userId)
 );
 

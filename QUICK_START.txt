@@ -1,0 +1,95 @@
+╔════════════════════════════════════════════════════════════╗
+║                                                            ║
+║              🎵 RETROPLAY - QUICK START 🎵                ║
+║                                                            ║
+╚════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────────────────────────────────────┐
+│  EASIEST WAY TO START (Just 1 Click!)                     │
+└────────────────────────────────────────────────────────────┘
+
+   📁 Open RETROPLAY folder
+   
+   📄 Double-click one of these:
+      • RUN.bat          (Windows - Recommended!)
+      • RETROPLAY.bat    (Windows - Alternative)
+      • run.py           (All platforms)
+   
+   ⏱️  Wait 2 seconds
+   
+   🌐 Browser opens automatically!
+   
+   ✅ Done!
+
+
+┌────────────────────────────────────────────────────────────┐
+│  EVEN EASIER - ONE-TIME SETUP                              │
+└────────────────────────────────────────────────────────────┘
+
+   1. Double-click: create_shortcut.py
+   
+   2. Find "RETROPLAY" shortcut on desktop
+   
+   3. From now on: Just double-click desktop icon!
+   
+   🎉 Forever easy!
+
+
+┌────────────────────────────────────────────────────────────┐
+│  WHAT YOU'LL SEE                                           │
+└────────────────────────────────────────────────────────────┘
+
+   ============================================================
+      🎵 RETROPLAY - Music Player
+   ============================================================
+   
+   ✅ Server starting...
+   📍 URL: http://localhost:5000
+   🌐 Browser will open automatically in 2 seconds...
+   
+   ⚡ Press Ctrl+C to stop the server
+
+
+┌────────────────────────────────────────────────────────────┐
+│  TO STOP THE SERVER                                        │
+└────────────────────────────────────────────────────────────┘
+
+   Press: Ctrl + C
+   
+   Or just close the terminal window
+
+
+┌────────────────────────────────────────────────────────────┐
+│  IF BROWSER DOESN'T OPEN                                   │
+└────────────────────────────────────────────────────────────┘
+
+   Manually open browser and go to:
+   
+   http://localhost:5000
+
+
+┌────────────────────────────────────────────────────────────┐
+│  AVAILABLE LAUNCHERS                                       │
+└────────────────────────────────────────────────────────────┘
+
+   ⭐ RUN.bat          - Simple, auto-browser
+   ⭐ RETROPLAY.bat    - Same as RUN.bat
+   ⭐ run.py           - Cross-platform
+   📋 START.bat        - With pause (for debugging)
+   💻 app_fixed.py     - Direct server start
+
+
+┌────────────────────────────────────────────────────────────┐
+│  NEED HELP?                                                │
+└────────────────────────────────────────────────────────────┘
+
+   Read: EASY_START_GUIDE.md
+   
+   Or: README_START_HERE.md
+
+
+╔════════════════════════════════════════════════════════════╗
+║                                                            ║
+║  🎵 ENJOY YOUR MUSIC! 🎵                                  ║
+║                                                            ║
+╚════════════════════════════════════════════════════════════╝
